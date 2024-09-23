@@ -15,3 +15,6 @@ in funsione dei punti geometrici forniti dal punto precedente.
 
 #### Unity
 Simulazione degli ogggetti sulla base dei dati del punto precedente.
+
+#### Scenari applicativi
+Determinare possibili scenari applicativi.
