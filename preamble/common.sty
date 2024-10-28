@@ -1,0 +1,9 @@
+\NeedsTeXFormat{LaTeX2e}
+\ProvidesPackage{common}
+
+\RequirePackage{xparse}
+\RequirePackage{amsfonts}
+
+\ProvideDocumentCommand{\Clifford}{O{n}}{
+    \ensuremath{\mathop{Cl}_{#1}}
+}

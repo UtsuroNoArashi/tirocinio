@@ -1,56 +1,45 @@
-\begin{frame}{Definizioni preliminari}
-    Sia \(\mathbb{R}^{n}\) uno spazio vettoriale, siano  
-    \(\{\mathbf{e}_{1}, \ldots, \mathbf{e}_{n}\}\) i vettori che formano 
-    una base ortonormale per lo spazio.
+\begin{frame}{Algebra di Clifford}
+    Sia fissato uno spazio vettoriale \(\mathbb{R}^{n}\), e sia 
+    \(\{\mathbf{e}_{1}, \ldots, \mathbf{e}_{n}\}\) una sua base ortonormale.
 
-    Due qualsiasi vettori \(\mathbf{a}, \mathbf{b} \in \mathbb{R}^{n}\)
-    possono essere visti come combinazioni lineari dei vettori base.
-    \[
-        \mathbf{a} = \alpha_{1}\mathbf{e}_{1} +
-            \cdots + \alpha_{n}\mathbf{e}_{n} \qquad
-        \mathbf{b} = \beta_{1}\mathbf{e}_{1} +
-            \cdots + \beta_{n}\mathbf{e}_{n}
-    \] 
+    Da questi è possibile definire un nuovo spazio vettoriale,
+    detto spazio di Clifford n-dimensionale (\(\Clifford\)).
+    Nello specifico, \Clifford rappresenta l'insieme di tutti i 
+    possibili sottospazi \(k\)-dimensionali, con \(k \le n\), 
+    di tutte le possibili combinazioni dei vettori base.
 \end{frame}
-\begin{frame}
-    Dalla moltiplicazione di \(\mathbf{a} \text{ e } \mathbf{b}\) segue
-    \[\begin{aligned}
-        \mathbf{ab} & = (\alpha_{1}\mathbf{e}_{1} +
-            \cdots + \alpha_{n}\mathbf{e}_{n})
-            (\beta_{1}\mathbf{e}_{1} +
-            \cdots + \beta_{n}\mathbf{e}_{n}) \\
-            & = \alpha_{1}\beta_{1}\mathbf{e}_{1}\mathbf{e}_{1} +
-                \cdots + \alpha_{1}\beta_{n}\mathbf{e}_{1}\mathbf{e}_{n} +
-                \cdots + \alpha_{n}\beta_{n}\mathbf{e}_{n}\mathbf{e}_{n}
-    \end{aligned}\]
-
-    Sia per semplicita \(n = 2\), allora quanto sopra diventa
+\begin{frame}{Multivettori: il caso bi- e tri-dimensionale}
+    Si consideri lo spazio \(\mathbb{R}^{2}\) e sia \(\{\mathbf{e}_{1}, 
+    \mathbf{e}_{2}\}\) una sua base ortonormale. 
+    \'E noto che comunque presi \(\mathbf{a}, \mathbf{b} \in \mathbb{R}^{2}\),
+    questi possano essere intesi come opportune combinazioni lineari dei vettori 
+    base. Ossia
+    \[
+        \mathbf{a} = \alpha_{1}\mathbf{e}_{1} + \alpha_{2}\mathbf{e}_{2} 
+        \qquad \mathbf{a} = \beta_{1}\mathbf{e}_{1} + \beta_{2}\mathbf{e}_{2}
+    \]
+    inoltre, sappiamo che 
     \begin{equation}\label{eq:1}
         \begin{aligned}
-            \mathbf{ab} & = (\alpha_{1}\mathbf{e}_{1} + \alpha_{2}\mathbf{e}_{2})
-                (\beta_{1}\mathbf{e}_{1} + \beta_{2}\mathbf{e}_{2}) \\
-                & = \alpha_{1}\beta_{1}\mathbf{e}_{1}\mathbf{e}_{1} 
-                + \alpha_{1}\beta_{2}\mathbf{e}_{1}\mathbf{e}_{2}
-                + \alpha_{2}\beta_{1}\mathbf{e}_{2}\mathbf{e}_{1} 
-                + \alpha_{2}\beta_{2}\mathbf{2}_{2}\mathbf{e}_{2} 
-        \end{aligned}
+        \mathbf{ab} & = 
+            (\alpha_{1}\mathbf{e}_{1} + \alpha_{2}\mathbf{e}_{2})
+            (\beta_{1}\mathbf{e}_{1} + \beta_{2}\mathbf{e}_{2}) \\
+            & = \alpha_{1}\beta_{1}\mathbf{e}_{1}\mathbf{e}_{1} +
+                \alpha_{1}\beta_{2}\mathbf{e}_{1}\mathbf{e}_{2} +
+                \alpha_{2}\beta_{1}\mathbf{e}_{1}\mathbf{e}_{2} + 
+                \alpha_{2}\beta_{2}\mathbf{e}_{2}\mathbf{e}_{2}.
+        \end{aligned}\
     \end{equation}
-
-    Defininedo gli assiomi 
-    \begin{enumerate}
-        \item \(\mathbf{e}_{i}\mathbf{e}_{i} = 1, \forall i\) 
-        \item \(\mathbf{e}_{j}\mathbf{e}_{i} = -\mathbf{e}_{i}\mathbf{e}_{j}\)
-    \end{enumerate}
-    l'\emph{Equazione \ref{eq:1}} si può riscrivere come
-    \[\begin{aligned}
-        \mathbf{ab} & = (\alpha_{1}\mathbf{e}_{1} + \alpha_{2}\mathbf{e}_{2})
-                (\beta_{1}\mathbf{e}_{1} + \beta_{2}\mathbf{e}_{2}) \\
-                & = \alpha_{1}\beta_{1}
-                + \alpha_{1}\beta_{2}\mathbf{e}_{1}\mathbf{e}_{2}
-                + \alpha_{2}\beta_{1} 
-                + \alpha_{2}\beta_{2}\mathbf{e}_{2}\mathbf{e}_{2} \\
-                & = (\alpha_{1}\beta_{1} + \alpha_{2}\beta_{2})
-                + (\alpha_{1}\beta_{2} - \alpha_{2}\beta_{1})\mathbf{e}_{1}\mathbf{e}_{2}
-    \end{aligned}\]
 \end{frame}
-
+\begin{frame}
+    Defininedo i seguenti assiomi:
+    \begin{enumerate}
+        \item \(\mathbf{e}_{i}\mathbf{e}_{i} = 1\)
+        \item \(\mathbf{e}_{j}\mathbf{e}_{i} = - \mathbf{e}_{i}\mathbf{e}_{j}\)
+    \end{enumerate}
+    \emph{Equazione \eqref{eq:1}} può essere riscritta come 
+    \[
+        \mathbf{ab} = (\alpha_{1}\beta_{1} + \alpha_{2}\beta_{2})
+            + (\alpha_{1}\beta_{2} - \alpha_{2}\beta_{1})\mathbf{e}_{1}\mathbf{e}_{2}
+    \]
+\end{frame}
