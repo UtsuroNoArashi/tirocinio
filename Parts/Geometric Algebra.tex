@@ -1,3 +1,84 @@
-\begin{frame}{Some title}
-    Some text
+\begin{frame}{Algebra di Clifford}
+    Sia fissato uno spazio vettoriale \(\mathbb{R}^{n}\), e sia 
+    \(\{\Vb{e}_{1}, \ldots, \Vb{e}_{n}\}\) una sua base ortonormale.
+
+    Da questi è possibile definire un nuovo spazio vettoriale,
+    detto spazio di Clifford n-dimensionale (\(\Clifford\)).
+    Nello specifico, \Clifford rappresenta l'insieme di tutti i 
+    possibili sottospazi \(k\)-dimensionali, con \(k \le n\), 
+    di tutte le possibili combinazioni dei vettori base.
+\end{frame}
+\begin{frame}{Multivettori: il caso bi- e tri-dimensionale}
+    Si consideri lo spazio \(\mathbb{R}^{2}\) e sia \(\{\Vb{e}_{1}, 
+    \Vb{e}_{2}\}\) una sua base ortonormale. 
+    \'E noto che comunque presi \(\Vb{a}, \Vb{b} \in \mathbb{R}^{2}\),
+    questi possano essere intesi come opportune combinazioni lineari dei vettori 
+    base. Ossia
+    \[
+        \Vb{a} = \alpha_{1}\Vb{e}_{1} + \alpha_{2}\Vb{e}_{2} 
+        \qquad \Vb{a} = \beta_{1}\Vb{e}_{1} + \beta_{2}\Vb{e}_{2}
+    \]
+    inoltre, sappiamo che 
+    \begin{equation}\label{eq:1}
+        \begin{aligned}
+        \Vb{ab} & = 
+            (\alpha_{1}\Vb{e}_{1} + \alpha_{2}\Vb{e}_{2})
+            (\beta_{1}\Vb{e}_{1} + \beta_{2}\Vb{e}_{2}) \\
+            & = \alpha_{1}\beta_{1}\Vb{e}_{1}\Vb{e}_{1} +
+                \alpha_{1}\beta_{2}\Vb{e}_{1}\Vb{e}_{2} +
+                \alpha_{2}\beta_{1}\Vb{e}_{1}\Vb{e}_{2} + 
+                \alpha_{2}\beta_{2}\Vb{e}_{2}\Vb{e}_{2}.
+        \end{aligned}\
+    \end{equation}
+\end{frame}
+\begin{frame}
+    Defininedo i seguenti assiomi:
+    \begin{enumerate}
+        \item \(\Vb{e}_{i}\Vb{e}_{i} = 1\)
+        \item \(\Vb{e}_{j}\Vb{e}_{i} = - \Vb{e}_{i}\Vb{e}_{j}\)
+    \end{enumerate}
+    \emph{Equazione \eqref{eq:1}} può essere riscritta come 
+    \begin{equation}\label{eq:2}
+        \Vb{ab} = (\alpha_{1}\beta_{1} + \alpha_{2}\beta_{2}) + 
+            (\alpha_{1}\beta_{2} - \alpha_{2}\beta_{1})\Vb{e}_{1}\Vb{e}_{2}
+    \end{equation}
+\end{frame}
+\begin{frame}
+    Da \emph{Equazione \eqref{eq:2}} segue che,
+    \(\forall \Vb{a}, \Vb{b} \in \mathbb{R}^{2}\)
+    il loro prodotto risulti essere la somma di un termine scalare
+    (\(\alpha_{1}\beta_{1} + \alpha_{2}\beta_{2}\)) e da un termine 
+    \((\alpha_{1}\beta_{2} - \alpha_{2}\beta_{1})\Vb{e}_{1}\Vb{e}_{2}\).
+
+    Dando un'interpretazione geometrica, 
+    \((\alpha_{1}\beta_{2} - \alpha_{2}\beta_{1})\) descrive l'area 
+    del rettandolo definita dai vettori \(\Vb{e}_{1}, \Vb{e}_{2}\);
+    segue che (\(\Vb{e}_{1}, \Vb{e}_{2}\)) definiscono il piano
+    su cui giace l'area.
+
+    In conclusione, \(\Vb{e}_{1}\Vb{e}_{2}\) rappresenta un'area 
+    orientata in \(\mathbb{R}^{2}\) ed è definita \emph{bivettore}.
+\end{frame}
+\begin{frame}
+    Un ragionamento analogo può essere fatto per \(\mathbb{R}^{3}\).
+
+    Sia \{\(\Vb{e}_{1}, \Vb{e}_{2}, \Vb{e}_{3}\)\} una base ortonormale
+    di \(\mathbb{R}^{3}\). 
+    Considerati \(\Vb{a}, \Vb{b} \in \mathbb{R}^{3}\),
+    questi saranno della forma 
+    \[
+        \Vb{a} = \alpha_{1}\Vb{e}_{1} + \alpha_{2}\Vb{e}_{2} 
+            + \alpha_{3}\Vb{e}_{3}  
+            \qquad 
+        \Vb{b} = \beta_{1}\Vb{e}_{1} + \beta_{2}\Vb{e}_{2}
+            + \beta_{3}\Vb{e}_{3}
+     \]
+     Considerandone il prodotto, e applicando gli assiomi definti poco sopra,
+     segue 
+     \[\begin{aligned}
+         \Vb{ab} & = (\alpha_{1}\beta_{1} + \alpha_{2}\beta_{2} + \alpha_{3}\beta_{3}) \\ 
+            & + (\alpha_{1}\beta_{2} - \alpha_{2}\beta_{1})\Vb{e}_{1}\Vb{e}_{2} \\
+            & + (\alpha_{1}\beta_{3} - \alpha_{3}\beta_{1})\Vb{e}_{1}\Vb{e}_{3} \\
+            & + (\alpha_{2}\beta_{3} - \alpha_{3}\beta_{2})\Vb{e}_{2}\Vb{e}_{3} \\
+     \end{aligned}\]
 \end{frame}
