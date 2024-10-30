@@ -1,3 +1,40 @@
-\begin{frame}{The frame title}
-    \[\]
+\begin{frame}{GATr - Introduzione}
+    In diverse situazioni si ha a che fare con dati di natura geometrica, soprattutto
+    in ambiti scientifici ed ingegneristici. Il vantaggio di utilizzare dati geometrici
+    risiede nel comportamento definito dei dati sotto trasformazioni ben definite 
+    (come distanze e rotazioni).
+
+    Con l'obiettivo di utilizzare nel modo migliore questi dati, si introduce il 
+    Geometric Algebra Transformer (GATr), un'architettura di rete general-purpose 
+    che sfrutta dati geometrici. 
+\end{frame}
+
+\begin{frame}{GATr - Idee Chiave}
+    GATr riunisce tre idee fondamentali: 
+    \begin{itemize}
+        \item Algebra Geometrica;
+        \item Equivarianza;
+        \item Trasformer.
+    \end{itemize}
+\end{frame}
+
+\begin{frame}{Algebra Geometrica}
+    GATr consente di rappresentare i dati come multivettori dell'algebra geometrica 
+    proiettiva \(\mathbb{G}_{3,0,1}\), che estende lo spazio vettoriale 
+    \(\mathbb{R}^{3}\) a multivettori a 16 dimensioni, capaci di rappresentare vari 
+    tipi geometrici e pose \(E(3)\).
+\end{frame}
+
+\begin{frame}{Equivarianza}
+    GATr è progettato per essere equivariante rispetto al gruppo di simmetria \(E(3)\), 
+    che descrive le trasformazioni nello spazio tridimensionale. 
+
+    A tale scopo, sono state sviluppate diverse nuove primitive 
+    \(E(3)\)-equivarianti, tra cui mappe lineari equivarianti, un meccanismo di 
+    attenzione, non-linearità e strati di normalizzazione.
+\end{frame}
+
+\begin{frame}{Trasformer}
+    Per il GATr si è scelto di utilizzare l'architettura Transformer grazie alle sue 
+    favorevoli proprietà di scalabilità, espressività, addestrabilità e versatilità.
 \end{frame}
