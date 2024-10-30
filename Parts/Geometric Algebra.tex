@@ -82,3 +82,83 @@
             & + (\alpha_{2}\beta_{3} - \alpha_{3}\beta_{2})\Vb{e}_{2}\Vb{e}_{3} \\
      \end{aligned}\]
 \end{frame}
+\begin{frame}
+    Oltre le tre aree, in \(\mathbb{R}^{3}\) è possibile definire un elemento 
+    dato dal prodotto dei vettori base: \(\Vb{e}_{1}\Vb{e}_{2}\Vb{e}_{3}\).
+
+    Similarmente all'area orientata rappresentata da \(\Vb{e}_{1}\Vb{e}_{2}\),
+    \(\Vb{e}_{1}\Vb{e}_{2}\Vb{e}_{3}\) rappresenta un volume orientata in 
+    \(\mathbb{R}^{3}\).
+\end{frame}
+\begin{frame}{Multivettori: il caso generale}
+    In generale fissato un n, e assunti \{\(\Vb{e}_{1}, \ldots, \Vb{e}_{n}\)\}
+    una base ortonormale di uno spazio \(\mathbb{R}^{n}\),
+    un multivettore \(\Vb{a} \in \mathbb{R}^{n}\) è un elemento della forma
+    \[
+        \Vb{a} = \alpha_{0} + \alpha_{1}\Vb{e}_{1} + \cdots \alpha_{n}\Vb{e}_{n}
+            + \alpha_{1,2}\Vb{e}_{1}\Vb{e}_{2} + \cdots 
+            + \alpha_{1, \cdots, n}\Vb{e}_{1} \cdots \Vb{e}_{n}
+    \]
+    e lo spazio che contiene tutti questi multivettori è detto spazio di Clifford
+    n-dimensionale (\Clifford).
+\end{frame}
+\begin{frame}{Operazioni tra multivettori}
+    Fissata una qualche algebra di Clifford \Clifford, 
+    su gli elementi della stessa è possibile applicare diverse operazioni,
+    quali 
+    \begin{itemize}
+        \item prodotto geometrico
+        \item prodotto esterno
+        \item contrazione sinistra (destra)
+        \item operazioni unari: duale, inverso, coniugato e involuzione di grado
+    \end{itemize}
+\end{frame}
+\begin{frame}{Operazioni tra multivettori: il prodotto geometrico}
+    Sia considerata \Clifford[2], (l'estensione al caso n-simo è immediata),
+    e siano \(\Vb{a}, \Vb{b}\) due multivettori.
+
+    Il prodotto geometrico tra i due consiste nel moltiplicare ciascuna delle 
+    componenti del primo multivettore per quelle del secondo, 
+    tenendo conto dei seguenti assiomi:
+    \begin{itemize}
+        \item \(\Vb{e}_{i}\Vb{e}_{i} = \pm 1\)
+        \item \(\Vb{e}_{i}\Vb{e}_{j} = -\Vb{e}_{i}\Vb{e}_{j}\)
+        \item \(\lambda\Vb{e}_{i} = \Vb{e}_{i}\lambda\)
+    \end{itemize}
+\end{frame}
+\begin{frame}
+    Si ha cioè che 
+    \[\begin{aligned}
+        \Vb{ab} &= 
+            (\alpha_{0} + \alpha_{1}\Vb{e}_{1} + \alpha_{2}\Vb{e}_{2} 
+                + \alpha_{1}\alpha_{2}\Vb{e}_{1}\Vb{e}_{2})
+            (\beta_{0} + \beta_{1}\Vb{e}_{1} + \beta_{2}\Vb{e}_{2}
+                + \beta_{1}\beta_{2}\Vb{e}_{1}\Vb{e}_{2}) \\
+            &= \alpha_{0}\beta_{0} + \alpha_{0}\beta_{1}\Vb{e}_{1}
+            + \alpha_{0}\beta_{2}\Vb{e}_{2} 
+            + \alpha_{0}\beta_{1}\beta_{2}\Vb{e}_{1}\Vb{e}_{2} \\
+            & + \alpha_{1}\beta_{0}\Vb{e}_{1} + \alpha_{1}\beta_{1}\Vb{e}_{1}\Vb{e}_{1}
+            + \alpha_{1}\beta_{2}\Vb{e}_{1}\Vb{e}_{2} 
+            + \alpha_{1}\beta_{1}\beta_{2}\Vb{e}_{1}\Vb{e}_{1}\Vb{e}_{2} \\
+            & + \alpha_{2}\beta_{0}\Vb{e}_{2} + \alpha_{2}\beta_{1}\Vb{e}_{2}\Vb{e}_{1}
+            + \alpha_{2}\beta_{2}\Vb{e}_{2}\Vb{e}_{2} 
+            + \alpha_{2}\beta_{1}\beta_{2}\Vb{e}_{2}\Vb{e}_{1}\Vb{e}_{2} \\ 
+            & + \alpha_{1}\alpha_{2}\beta_{0}\Vb{e}_{1}\Vb{e}_{2} 
+            + \alpha_{1}\alpha_{2}\beta_{1}\Vb{e}_{1}\Vb{e}_{2}\Vb{e}_{1}
+            + \alpha_{1}\alpha_{2}\beta_{2}\Vb{e}_{1}\Vb{e}_{2}\Vb{e}_{2}
+            + \alpha_{1}\alpha_{2}\beta_{1}\beta_{2}\Vb{e}_{1}\Vb{e}_{2}\Vb{e}_{1}\Vb{e}_{2}
+    \end{aligned}\]
+    diventa, applicando gli assiomi di cui sopra
+    \[\begin{aligned}
+        \Vb{ab} & = (\alpha_{0}\beta_{0} + \alpha_{1}\beta_{1} 
+        + \alpha_{2}\beta_{2} - \alpha_{1}\alpha_{2}\beta_{1}\beta_{2}) \\ 
+        & + (\alpha_{0}\beta_{1} + \alpha_{1}\beta_{0} 
+            - \alpha_{2}\beta_{1}\beta_{2} + \alpha_{1}\alpha_{2}\beta_{2})\Vb{e}_{1} \\
+        & + (\alpha_{0}\beta_{2} + \alpha_{2}\beta_{0} 
+            + \alpha_{1}\beta_{1}\beta_{2} - \alpha_{1}\alpha_{2}\beta_{1})\Vb{e}_{2} \\
+        & + (\alpha_{0}\beta_{1}\beta_{2} + \alpha_{1}\alpha_{2}\beta_{0} 
+            + \alpha_{1}\beta_{2} - \alpha_{2}\beta_{1})\Vb{e}_{1}\Vb{e}_{2}
+    \end{aligned}
+
+    \]
+\end{frame}
