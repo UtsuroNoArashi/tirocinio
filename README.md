@@ -1,3 +1,0 @@
-# tirocinio
-
-Prima modifica
