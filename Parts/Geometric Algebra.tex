@@ -100,7 +100,9 @@
             + \alpha_{1, \cdots, n}\Vb{e}_{1} \cdots \Vb{e}_{n}
     \]
     e lo spazio che contiene tutti questi multivettori è detto spazio di Clifford
-    n-dimensionale (\Clifford).
+    n-dimensionale (\Clifford). 
+    In ultimo, il multivettore dato dal prodotto di ogni vettore base è detto
+    \emph{pseudo-scalare}.
 \end{frame}
 \begin{frame}{Operazioni tra multivettori}
     Fissata una qualche algebra di Clifford \Clifford, 
@@ -109,7 +111,6 @@
     \begin{itemize}
         \item prodotto geometrico
         \item prodotto esterno
-        \item contrazione sinistra (destra)
         \item operazioni unari: duale, inverso, coniugato e involuzione di grado
     \end{itemize}
 \end{frame}
@@ -130,35 +131,82 @@
     Si ha cioè che 
     \[\begin{aligned}
         \Vb{ab} &= 
-            (\alpha_{0} + \alpha_{1}\Vb{e}_{1} + \alpha_{2}\Vb{e}_{2} 
-                + \alpha_{1}\alpha_{2}\Vb{e}_{1}\Vb{e}_{2})
-            (\beta_{0} + \beta_{1}\Vb{e}_{1} + \beta_{2}\Vb{e}_{2}
-                + \beta_{1}\beta_{2}\Vb{e}_{1}\Vb{e}_{2}) \\
-            &= \alpha_{0}\beta_{0} + \alpha_{0}\beta_{1}\Vb{e}_{1}
-            + \alpha_{0}\beta_{2}\Vb{e}_{2} 
-            + \alpha_{0}\beta_{1}\beta_{2}\Vb{e}_{1}\Vb{e}_{2} \\
-            & + \alpha_{1}\beta_{0}\Vb{e}_{1} + \alpha_{1}\beta_{1}\Vb{e}_{1}\Vb{e}_{1}
-            + \alpha_{1}\beta_{2}\Vb{e}_{1}\Vb{e}_{2} 
-            + \alpha_{1}\beta_{1}\beta_{2}\Vb{e}_{1}\Vb{e}_{1}\Vb{e}_{2} \\
-            & + \alpha_{2}\beta_{0}\Vb{e}_{2} + \alpha_{2}\beta_{1}\Vb{e}_{2}\Vb{e}_{1}
-            + \alpha_{2}\beta_{2}\Vb{e}_{2}\Vb{e}_{2} 
-            + \alpha_{2}\beta_{1}\beta_{2}\Vb{e}_{2}\Vb{e}_{1}\Vb{e}_{2} \\ 
-            & + \alpha_{1}\alpha_{2}\beta_{0}\Vb{e}_{1}\Vb{e}_{2} 
-            + \alpha_{1}\alpha_{2}\beta_{1}\Vb{e}_{1}\Vb{e}_{2}\Vb{e}_{1}
-            + \alpha_{1}\alpha_{2}\beta_{2}\Vb{e}_{1}\Vb{e}_{2}\Vb{e}_{2}
-            + \alpha_{1}\alpha_{2}\beta_{1}\beta_{2}\Vb{e}_{1}\Vb{e}_{2}\Vb{e}_{1}\Vb{e}_{2}
+            (\alpha_{0} + \alpha_{1}\mathbf{e}_{1} + \alpha_{2}\mathbf{e}_{2} 
+                + \alpha_{12}\mathbf{e}_{12})
+            (\beta_{0} + \beta_{1}\mathbf{e}_{1} + \beta_{2}\mathbf{e}_{2}
+                + \beta_{12}\mathbf{e}_{12}) \\
+            & = \alpha_{0}\beta_{0} + \alpha_{0}\beta_{1}\mathbf{e}_{1}
+            + \alpha_{0}\beta_{2}\mathbf{e}_{2} 
+            + \alpha_{0}\beta_{12}\mathbf{e}_{12} \\
+            & + \alpha_{1}\beta_{0}\mathbf{e}_{1} + \alpha_{1}\beta_{1}\mathbf{e}_{11}
+              + \alpha_{1}\beta_{2}\mathbf{e}_{12} 
+              + \alpha_{1}\beta_{12}\mathbf{e}_{112} \\
+            & + \alpha_{2}\beta_{0}\mathbf{e}_{2} + \alpha_{2}\beta_{1}\mathbf{e}_{21}
+              + \alpha_{2}\beta_{2}\mathbf{e}_{22} 
+              + \alpha_{2}\beta_{12}\mathbf{e}_{212} \\ 
+            & + \alpha_{12}\beta_{0}\mathbf{e}_{12} 
+              + \alpha_{12}\beta_{1}\mathbf{e}_{121}
+              + \alpha_{12}\beta_{2}\mathbf{e}_{122} 
+              + \alpha_{12}\beta_{12}\mathbf{e}_{1212}  
     \end{aligned}\]
     diventa, applicando gli assiomi di cui sopra
     \[\begin{aligned}
-        \Vb{ab} & = (\alpha_{0}\beta_{0} + \alpha_{1}\beta_{1} 
-        + \alpha_{2}\beta_{2} - \alpha_{1}\alpha_{2}\beta_{1}\beta_{2}) \\ 
-        & + (\alpha_{0}\beta_{1} + \alpha_{1}\beta_{0} 
-            - \alpha_{2}\beta_{1}\beta_{2} + \alpha_{1}\alpha_{2}\beta_{2})\Vb{e}_{1} \\
-        & + (\alpha_{0}\beta_{2} + \alpha_{2}\beta_{0} 
-            + \alpha_{1}\beta_{1}\beta_{2} - \alpha_{1}\alpha_{2}\beta_{1})\Vb{e}_{2} \\
-        & + (\alpha_{0}\beta_{1}\beta_{2} + \alpha_{1}\alpha_{2}\beta_{0} 
-            + \alpha_{1}\beta_{2} - \alpha_{2}\beta_{1})\Vb{e}_{1}\Vb{e}_{2}
-    \end{aligned}
-
+        \Vb{ab} & = 
+            (\alpha_{0}\beta_{0} + \alpha_{1}\beta_{1} 
+                + \alpha_{2}\beta_{2} - \alpha_{12}\beta_{12}) \\ 
+            & + (\alpha_{0}\beta_{1} + \alpha_{1}\beta_{0} 
+                - \alpha_{2}\beta_{12} + \alpha_{12}\beta_{2})\Vb{e}_{1} \\
+            & + (\alpha_{0}\beta_{2} + \alpha_{2}\beta_{0} 
+                + \alpha_{1}\beta_{12} - \alpha_{12}\beta_{1})\Vb{e}_{2} \\
+            & + (\alpha_{0}\beta_{12} + \alpha_{12}\beta_{0} 
+                + \alpha_{1}\beta_{2} - \alpha_{2}\beta_{1})\Vb{e}_{12}
+    \end{aligned}\]
+\end{frame}
+\begin{frame}
+    Si dimostra inoltre che il prodotto geometrico gode delle seguenti proprietà:
+    \begin{itemize}
+        \item [ ] \emph{Associatività}: 
+            \[
+                \forall \Vb{a}, \Vb{b}, \Vb{c} \in \mathbb{R}^{n},
+            (\Vb{ab})\Vb{c} = \Vb{a}(\Vb{bc})
+            \]
+        \item [ ] \emph{Commutatività rispetto uno scalare}: 
+            \[
+                \forall \Vb{a} \in \mathbb{R}^{n}, \lambda \in \mathbb{R}, 
+                \lambda\Vb{a} = \Vb{a}\lambda
+            \]
+        \item [ ] \emph{Distributività rispetto la somma}:
+            \[
+                \forall \Vb{a}, \Vb{b}, \Vb{c} \in \mathbb{R}^{n},
+                \Vb{a}(\Vb{b} + \Vb{c}) = \Vb{ab} + \Vb{ac}
+            \]
+    \end{itemize}
+\end{frame}
+\begin{frame}
+    Formulazione alternativa del prodotto geometrico è la seguente
+    \[
+        \Vb{ab} = \Vb{a} \cdot \Vb{b} + \Vb{a} \wedge \Vb{b}
     \]
+    ove \(\Vb{a} \cdot \Vb{b}\), detto \emph{prodotto inteno},
+    determina la componente scalare del prodotto; 
+    \(\Vb{a} \wedge \Vb{b}\), detto \emph{prodotto esterno},
+    ne determina la componente multivettoriale.
+
+    Più correttamente sono \(\Vb{a} \cdot \Vb{b}\) e \(\Vb{a} \wedge \Vb{b}\)
+    ad essere definiti in termini di prodotto esterno. 
+    Nello specifico
+    \[\begin{gathered}
+        \Vb{a} \wedge \Vb{b} = \frac{1}{2}(\Vb{ab} - \Vb{ba}) \\ 
+        \Vb{a} \cdot \Vb{b} = \frac{1}{2}(\Vb{ab} + \Vb{ba})
+    \end{gathered}\]
+\end{frame}
+\begin{frame}{Gli operatori unari}
+    Si distinguono quattro operatori, di cui i seguenti risultano di interesse.
+    \begin{itemize}
+        \item \emph{Duale}: \(\forall \Vb{a} \in \mathbb{R}^{n},
+            \Vb{a^{*}} = \Vb{a} \rfloor \Vb{I}_{n}^{-1}\), con \(\Vb{I}_{n}\)
+            pseudo-scalare dello spazio.
+        \item \emph{Inverso}: \(\forall \Vb{a}, \Vb{b} \in \mathbb{R}^{n},
+            (\Vb{a} \wedge \vb{b})^{\dagger} = \Vb{b} \wedge \Vb{a}\).
+    \end{itemize}
 \end{frame}
