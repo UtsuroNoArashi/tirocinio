@@ -84,6 +84,7 @@
         \centering
         \includegraphics[width=0.9\textwidth]{../Images/relazioneOggettiOperatori.png}
         \caption{Tabella di oggetti 3D e trasformazioni}
+        \label{fig:relazioneOggettiOperatori}
     \end{figure}
 \end{frame}
 
@@ -110,4 +111,50 @@
     favorevoli proprietà di scalabilità, espressività, addestrabilità e versatilità.
 
     Di seguito si analizza più nel dettagli la struttura di questo modello.
+\end{frame}
+
+\begin{frame}{Principi di design}
+
+    GATr è progettato per rappresentre vari oggetti e trasformazioni geometriche in 
+    modo efficiente, permettendo il calcolo di diverse trasformazioni utilizzando pochi 
+    strati e pochi dati. 
+
+    GATr è stato progettato anche per essere simmetrico al gruppo di simmetria \(E(3)\),
+    che include traslazioni, rotazioni e riflessioni. Permette quindi trasformazioni 
+    arbitrarie sotto \(E(3)\), anche rispetto a traslazione degli input, permettendo di 
+    rappresentare posizioni assolute. 
+
+    GATr deve essere anche flessibile ripetto a più tipi di input geometrici, che vanno 
+    da scene statiche a serie temporali. Il meccanismo di attenzione tramite prodotto 
+    scalare, applicabile a più oggetti.
+
+\end{frame}
+\begin{frame}{Panoramica del Flusso di Lavoro di GATr}
+    \begin{figure}
+        \centering
+        \includegraphics[width=1\textwidth]{../Images/GatrWorkflow.png}
+    \end{figure}
+    
+    \textbf{Fasi del Flusso di Lavoro:}
+    \begin{itemize}
+        \item Se necessario gli input grezzi vengono preprocessati in tipi geometrici.
+        \item Gli oggetti geometrici vengono incorporati in multivettori dell'algebra 
+        geometrica \( G_{3,0,1} \), come descritto nella Figura \ref{fig:relazioneOggettiOperatori}.
+        \item I dati multivettoriali vengono elaborati con una rete GATr.
+    \end{itemize}
+\end{frame}
+
+\begin{frame}{Architettura di GATr}
+    \begin{figure}
+        \centering
+        \includegraphics[width=1\textwidth]{../Images/GatrArchitecture.png}
+        \caption{Architettura dettagliata di GATr.}
+    \end{figure}
+    
+    L'architettura di GATr è composta da \( N \) blocchi trasformer, ognuno dei quali 
+    include: un \textbf{LayerNorm} e un \textbf{meccanismo di auto-attenzione} per multivettori 
+    equivarianti, una \textbf{connessione residua}, un altro LayerNorm, un \textbf{MLP con interazioni 
+    bilineari geometriche} e una seconda connessione residua. 
+    Dall’output di GATr si estraggono le variabili target, come illustrato in 
+    Figura \ref{fig:relazioneOggettiOperatori}.
 \end{frame}
