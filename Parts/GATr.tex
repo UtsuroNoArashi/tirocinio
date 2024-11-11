@@ -158,3 +158,92 @@
     Dall’output di GATr si estraggono le variabili target, come illustrato in 
     Figura \ref{fig:relazioneOggettiOperatori}.
 \end{frame}
+
+\begin{frame}{LayerNorm - Layer Lineari}  
+    Per preservare l’equivarianza, qualsiasi trasformazione lineare applicata ai 
+    multivettori deve mantenere la coerenza sotto trasformazioni geometriche, come 
+    rotazioni o traslazioni.
+
+    \textbf{Formula Generale:}  
+    \[
+        \phi(x) = \sum_{k = 0}^{d+1} w_k {\langle x \rangle}_k + 
+        \sum_{k = 0}^{d} v_k e_0 {\langle x \rangle}_k
+    \]     
+
+    \begin{itemize}
+        \item La trasformazione combina diverse parti del multivettore, filtrate in base 
+        al loro grado \( k \)
+        \item \( w_k \) e \( v_k \) sono parametri apprendibili che controllano come 
+        queste parti vengono combinate.
+        \item \( e_0 \) funge da “base omogenea” per preservare la struttura geometrica.
+    \end{itemize}
+\end{frame}
+
+% TODO: Approfondire e spiegare meglio 
+\begin{frame}{Prodotti Geometrici Bilineari}
+    (Da Approfondire).\\
+    Per permettere alla rete di costruire nuove caratteristiche geometriche da quelle 
+    esistenti, come il vettore di traslazione tra due punti, sono necessarie due 
+    primitive aggiuntive. 
+    \begin{itemize}
+        \item \textbf{Prodotto geometrico} \(x, y \rightarrow xy \), consente di mescolare fa 
+        loro diversi tipi di componenti geometriche, come vettori e piani.
+        \item \textbf{Join} \( x,y \rightarrow (x^* \wedge y^*)^* \) operazione bilineare 
+        che include il duale per rappresentare caratteristiche semplici come la distanza 
+        euclidea. Il join viene reso equivariante anche rispetto alle riflessioni, 
+        moltiplicandolo per uno pseudoscalare
+    \end{itemize}
+\end{frame}
+
+\begin{frame}{Non-linearità e Normalizzazione}
+    La non-linearità utilizzata è la Gated-GELU, applicata al componente scalare del 
+    multivettore. La normalizzazione LayerNorm è \( E(3) \)-equivariante, calcolata su 
+    canali con in prodotto interno invariati di \( \mathbb{G}_{3,0,1} \)
+\end{frame}
+
+\begin{frame}{Attenzione Multivettoriale Equivariante E(3)} 
+    (Da Approfondire).\\
+    L'attenzione multivettoriale equivariante E(3) è una versione adattata del meccanismo 
+    di attenzione standard, progettata per lavorare con dati multivettoriali.
+
+    Si parte da tensori di query, key e value, ciascuno con \( n_i \) elementi (o token) 
+    e \( n_c \) canali.
+    \begin{itemize}
+        \item L'attenzione viene calcolata usando un prodotto interno scalato:
+        \[
+            \text{Attention}(q, k, v)_{i' c'} = \text{Softmax}_i 
+            \left( \frac{\sum_i P_c \langle q_{i' c}, k_{i c} \rangle}{\sqrt{8 n_c}} \right) v_{i c'}
+        \]
+        \item Qui, \( \langle \cdot, \cdot \rangle \) è il prodotto interno invariante 
+        dell’algebra geometrica \( G_{3,0,1} \), basato sul normale prodotto scalare \( R^8 \).
+    \end{itemize}
+    
+\end{frame}
+
+\begin{frame}{Estensioni dell'Architettura GATr}
+    Diverse estensioni possono essere applicate all'architettura di GATr per aumentarne 
+    la flessibilità e l'espressività:
+    
+    \begin{itemize}
+        \item \textbf{Rappresentazioni scalari ausiliarie:}  
+        Integrazione di dati non geometrici, come codifiche posizionali, con scalari 
+        aggiuntivi.
+        
+        \item \textbf{Attenzione basata sulla distanza:}  
+        Meccanismo di attenzione che considera la distanza euclidea tra i punti per 
+        migliorare l'espressività del modello.
+        
+        \item \textbf{Incorporamenti posizionali:}  
+        Utilizzo di embedding posizionali rotanti per sequenze di oggetti.
+        
+        \item \textbf{Attenzione assiale:}  
+        Gestione di dati su più dimensioni (oggetti, sequenze temporali) attraverso 
+        attenzione assiale.
+    \end{itemize}
+    
+    Queste estensioni ampliano le capacità di GATr, mantenendo i benefici di 
+    equivarianza ed efficienza computazionale.
+\end{frame}
+
+
+
