@@ -245,5 +245,116 @@
     equivarianza ed efficienza computazionale.
 \end{frame}
 
+\begin{frame}{Esperimenti}
+    Si presentano una serie di esperimenti volti a dimostrare l'efficacia di 
+    GATr in diversi ambiti. Questi esperimenti valutano le prestazioni di GATr 
+    rispetto ad altri modelli, sia equivarianti che non, in termini di accuratezza, 
+    efficienza dei dati e scalabilità.
 
+    \begin{itemize}
+        \item \textbf{ \( n \)-body dynamics, }
+        \item \textbf{ Stima dello stress di parete su grandi mesh di arterie umane, }
+        \item \textbf{ Pianificazione robotica tramite diffusione invariante, }
+    \end{itemize}
+\end{frame}
+
+\begin{frame}{\( n \)-body dynamics}
+    \begin{itemize}
+        \item \textbf{Obiettivo:} Valutare la capacità di GATr di prevedere le posizioni finali di corpi celesti (una stella e pianeti) in un sistema gravitazionale.
+        \item \textbf{Dataset:} Dati sintetici generati con posizioni, velocità e masse campionate da distribuzioni specifiche, con trasformazioni casuali per migliorare la generalizzazione.
+        \item \textbf{Modelli di Confronto:}
+        \begin{itemize}
+            \item Transformer e MLP
+            \item SEGNN, SE(3)-Transformer (modelli equivarianti)
+            \item GCA-GNN (non equivariante)
+        \end{itemize}
+    \end{itemize}
+    
+\end{frame}
+
+\begin{frame}{Risultati dell'Esperimento}
+    \begin{figure}
+        \centering
+        \includegraphics[width=0.9\textwidth]{../Images/n-body.png}
+        % add caption
+    \end{figure}
+
+    GATr supera tutti i modelli di riferimento  in termini di efficienza dei dati, 
+    raggiungendo un errore di predizione inferiore con un minor numero di campioni di 
+    addestramento. GATr mostra anche una buona generalizzazione, ottenendo risultati 
+    promettenti su sistemi con un numero di corpi maggiore rispetto a quelli utilizzati 
+    durante l'addestramento e su dati traslati nello spazio.
+\end{frame}
+
+\begin{frame}{Stima dello Stress di Parete nelle Arterie Umane}
+    \begin{itemize}
+        \item \textbf{Obiettivo:} Testare la scalabilità di GATr su mesh di grande 
+        dimensione per stimare lo stress di parete nelle arterie umane, importante per 
+        la formazione di aneurismi.
+        \item \textbf{Dataset:} 2000 mesh di arterie, 1600 per l'addestramento e 400 
+        per la valutazione.
+        \item \textbf{Modelli di Confronto:}
+        \begin{itemize}
+            \item Transformer, PointNet++
+            \item GEM-CNN (modello equivariante)
+        \end{itemize}
+    \end{itemize}
+\end{frame}
+    
+\begin{frame}
+    \frametitle{Risultati dell'Esperimento}
+    \begin{figure}
+        \centering
+        \includegraphics[width=0.5\textwidth]{../Images/arteries.png}
+        % add caption
+    \end{figure}
+
+    \textbf{GATr} supera tutti i modelli di riferimento in termini di accuratezza e 
+    di efficienza nell'utilizzo dei dati, sia su dati non canonizzati 
+    (con mesh ruotate casualmente) che su dati canonizzati 
+    (con mesh orientate nella stessa direzione).
+\end{frame}
+
+\begin{frame}{Pianificazione Robotica tramite Diffusione Invariante}
+    (Approfondire)\\
+    \begin{itemize}
+        \item \textbf{Obiettivo:} Usare GATr come modello di diffusione per la 
+        pianificazione robotica.
+        \item \textbf{Compito:} Un braccio robotico Kuka deve impilare blocchi su un 
+        tavolo. Il reward è la probabilità di successo.
+        \item \textbf{Dataset:} 11,000 dimostrazioni di esperti.
+        \item \textbf{Modelli di Confronto:}
+        \begin{itemize}
+            \item Modelli di diffusione tradizionali (Diffuser, Transformer)
+            \item EDGI (modello equivariante)
+            \item CQL e BCQ (algoritmi di apprendimento per rinforzo offline)
+        \end{itemize}
+    \end{itemize}
+    
+\end{frame}
+    
+\begin{frame}{Risultati dell'Esperimento}
+    \begin{figure}
+        \centering
+        \includegraphics[width=0.4\textwidth]{../Images/Kena.png}
+    \end{figure}
+
+    GATr, utilizzato come backbone di un modello di diffusione, supera tutti i modelli 
+    di riferimento nel compito di impilamento dei blocchi, dimostrando una maggiore 
+    efficienza nell'utilizzo dei dati e ottenendo risultati migliori con un minor numero 
+    di traiettorie di addestramento.
+\end{frame}
+    
+\begin{frame}{Conclusioni}
+    \begin{itemize}
+        \item GATr si dimostra versatile ed efficace in vari contesti applicativi:
+        \begin{itemize}
+            \item Previsione di sistemi dinamici complessi.
+            \item Gestione di grandi set di dati geometrici.
+            \item Pianificazione robotica più efficiente.
+        \end{itemize}
+        \item GATr rappresenta un importante passo avanti nell'elaborazione di 
+        dati geometrici tramite deep learning.
+    \end{itemize}
+\end{frame}
 
