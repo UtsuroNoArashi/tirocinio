@@ -110,8 +110,8 @@
     quali 
     \begin{itemize}
         \item prodotto geometrico
-        \item prodotto esterno
-        \item operazioni unari: duale, inverso, coniugato e involuzione di grado
+        \item prodotto interno
+        \item operazioni unari
     \end{itemize}
 \end{frame}
 \begin{frame}{Operazioni tra multivettori: il prodotto geometrico}
@@ -168,7 +168,7 @@
         \item [ ] \emph{Associatività}: 
             \[
                 \forall \Vb{a}, \Vb{b}, \Vb{c} \in \mathbb{R}^{n},
-            (\Vb{ab})\Vb{c} = \Vb{a}(\Vb{bc})
+                (\Vb{ab})\Vb{c} = \Vb{a}(\Vb{bc})
             \]
         \item [ ] \emph{Commutatività rispetto uno scalare}: 
             \[
@@ -182,8 +182,25 @@
             \]
     \end{itemize}
 \end{frame}
-\begin{frame}
-    Formulazione alternativa del prodotto geometrico è la seguente
+\begin{frame}{Operazioni tra multivettori: prodotto interno}
+    Sebbene ne esistano varie formulazioni, 
+    di interesse è la forma contratta di Lounesto. 
+    Nello specifico, questa può essere intesa come una generalizzazione del 
+    prodotto scalare. 
+
+    Siano \(\alpha, \beta\) scalari, \(\Vb{a}, \Vb{b}\) vettori e \(\Vb{A}, 
+    \Vb{B}, \Vb{C}\) multivettori, allora vale quanto segue:
+    \[\begin{aligned}
+        \alpha \rfloor \beta & = \alpha\beta \\
+        \alpha \rfloor \Vb{b} & = \alpha\Vb{b} \\ 
+        \Vb{a} \rfloor \beta & = 0 \\ 
+        \Vb{a} \rfloor \Vb{b} & = \Vb{ab} \\ 
+        \Vb{a} \rfloor (\Vb{b} \wedge \Vb{C}) & = 
+            (\Vb{a} \rfloor \Vb{b}) \wedge \Vb{C} - \Vb{b} \wedge (\Vb{a} \rfloor \Vb{C})
+    \end{aligned}\]
+\end{frame}
+\begin{frame}{Operazioni tra multivettori: il prodotto geometrico v2}
+    Formulazione alternativa del prodotto geometrico è la seguente:
     \[
         \Vb{ab} = \Vb{a} \cdot \Vb{b} + \Vb{a} \wedge \Vb{b}
     \]
@@ -193,20 +210,35 @@
     ne determina la componente multivettoriale.
 
     Più correttamente sono \(\Vb{a} \cdot \Vb{b}\) e \(\Vb{a} \wedge \Vb{b}\)
-    ad essere definiti in termini di prodotto esterno. 
+    ad essere definiti in termini di prodotto geometrico. 
     Nello specifico
-    \[\begin{gathered}
+    \[\begin{aligned}
         \Vb{a} \wedge \Vb{b} = \frac{1}{2}(\Vb{ab} - \Vb{ba}) \\ 
         \Vb{a} \cdot \Vb{b} = \frac{1}{2}(\Vb{ab} + \Vb{ba})
-    \end{gathered}\]
+    \end{aligned}\]
 \end{frame}
-\begin{frame}{Gli operatori unari}
-    Si distinguono quattro operatori, di cui i seguenti risultano di interesse.
-    \begin{itemize}
-        \item \emph{Duale}: \(\forall \Vb{a} \in \mathbb{R}^{n},
-            \Vb{a^{*}} = \Vb{a} \rfloor \Vb{I}_{n}^{-1}\), con \(\Vb{I}_{n}\)
-            pseudo-scalare dello spazio.
-        \item \emph{Inverso}: \(\forall \Vb{a}, \Vb{b} \in \mathbb{R}^{n},
-            (\Vb{a} \wedge \vb{b})^{\dagger} = \Vb{b} \wedge \Vb{a}\).
-    \end{itemize}
+\begin{frame}{Operatori unari}
+    Di interesse risultano essere l'operatore duale (\(\Vb{x}^{*}\))
+    e l'inverso (\(\Vb{x}^{-1}\)).
+
+    Sia considerato l'inverso: questi, dato \(\Vb{a}\) un multivettore,
+    definisce il multivettore \(\Vb{a}^{-1}\) tale che \(\Vb{a}\Vb{a}^{-1} = 1\).
+    Come nel caso matriciale, l'esistenza di \(\Vb{a}^{-1}\) non è garantita.
+
+    Sono per tanto considerati i cosidetti versori: 
+    multivettori esprimibili nella forma \(\Vb{a} = v_{1}v_{2}\cdots v_{k}\);
+    per i quali è possibile garantire l'esistenza dell'inverso.
+\end{frame}
+\begin{frame}
+    Considerando il duale: sia \(\Vb{a}\) un multivettore, 
+    il suo \emph{duale} \(\Vb{a}^{*} = \Vb{a}\Vb{I}^{-1}\) rappresenta il vettore normale al multivettore.
+
+    Sia ad esempio considerato \(\Vb{e}_{12}\), calcolandone il duale si ha
+    \[\begin{aligned}
+        \Vb{e}_{12}^{*} & = \Vb{e}_{1}\Vb{e}_{1}\Vb{e}_{3}\Vb{e}_{2}\Vb{e}_{1} \\ 
+            & = - \Vb{e}_{1}\Vb{e}_{3}\Vb{e}_{2}\Vb{e}_{2}\Vb{e}_{1} \\ 
+            & = - \Vb{e}_{1}\Vb{e}_{3}\Vb{e}_{1} \\ 
+            & = \Vb{e}_{3}\Vb{e}_{1}\Vb{e}_{1} \\ 
+            & = \Vb{e}_{3}
+    \end{aligned}\]
 \end{frame}
