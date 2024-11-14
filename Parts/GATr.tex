@@ -1,10 +1,10 @@
 \begin{frame}{GATr - Introduzione}
     In diverse situazioni si ha a che fare con dati di natura geometrica, soprattutto
     in ambiti scientifici ed ingegneristici. Il vantaggio di utilizzare dati geometrici
-    risiede nel comportamento definito dei dati sotto trasformazioni ben definite 
-    (come distanze e rotazioni).
+    risiede nel comportamento definito dei dati sotto trasformazioni ben definite, come 
+    rotazioni e traslazioni.
 
-    Con l'obiettivo di utilizzare nel modo migliore questi dati, si introduce il 
+    Con l'obiettivo di sfruttare al meglio questi dati, si introduce il 
     Geometric Algebra Transformer (GATr), un'architettura di rete general-purpose 
     che sfrutta dati geometrici. 
 \end{frame}
@@ -18,7 +18,7 @@
     \end{itemize}
 \end{frame}
 
-\begin{frame}{Algebra Geometrica}
+\begin{frame}{Fondamenti di Algebra Geometrica: Strumenti e Applicazioni}
 
     Per rappresentare oggetti tridimensionali e applicare rotazioni e traslazioni su di 
     essi, la 3D GA non è sufficiente, poichè i multivettori dell'algebra tradizionale 
@@ -32,7 +32,7 @@
     rappresentare vari tipi geometrici e pose \(E(3)\).
 \end{frame}
 
-\begin{frame}{Algebra Geometrica}
+\begin{frame}{Fondamenti di Algebra Geometrica: Strumenti e Applicazioni}
 
     Nell’algebra geometrica, un vettore \( \Vb{u} \) può agire come operatore riflettendo 
     altri elementi nel piano ortogonale a \( \Vb{u} \). 
@@ -52,13 +52,14 @@
     con i multivettori di \( \mathbb{G}_{3,0,1} \). Il prodotto \textit{sandwich} applica 
     un versore \( u \) ad un elemento \( x \):
 
-    \[
+    \begin{equation}
         \rho_u(x) = 
         \begin{cases}
             u x u^{-1} & \text{se } u \text{ è pari} \\
             u x \hat{u}^{-1} & \text{se } u \text{ è dispari}
         \end{cases}
-    \]
+    \label{eq:4}
+    \end{equation}
 
     dove \( \hat{x} \) è l'involuzione di grado, che inverte il segno degli elementi 
     dispari (come vettori e trivettori) e lascia invariati quelli di grado pari. 
@@ -67,7 +68,7 @@
 
 \end{frame}
 
-\begin{frame}{Algebra Geometrica}
+\begin{frame}{Fondamenti di Algebra Geometrica: Strumenti e Applicazioni}
 
     Per rappresentare oggetti 3D, i piani sono descritti da vettori, e l'intersezione 
     di due oggetti geometrici è data dal prodotto wedge delle loro rappresentazioni. 
@@ -82,8 +83,10 @@
 \begin{frame}{Algebra Geometrica: Tabella di Oggetti e Operatori}
     \begin{figure}
         \centering
-        \includegraphics[width=0.9\textwidth]{../Images/relazioneOggettiOperatori.png}
-        \caption{Tabella di oggetti 3D e trasformazioni}
+        \includegraphics[width=1\textwidth]{../Images/relazioneOggettiOperatori.png}
+        \caption{La tabella mostra la relazione tra oggetti geometrici fondamentali 
+        (come vettori, piani) e gli operatori che li trasformano. Aiuta a visualizzare come 
+        diversi tipi di oggetti interagiscono tra loro tramite operazioni geometriche.}
         \label{fig:relazioneOggettiOperatori}
     \end{figure}
 \end{frame}
@@ -161,10 +164,11 @@
 
 \begin{frame}{LayerNorm - Layer Lineari}  
     Per preservare l’equivarianza, qualsiasi trasformazione lineare applicata ai 
-    multivettori deve mantenere la coerenza sotto trasformazioni geometriche, come 
-    rotazioni o traslazioni.
+    multivettori deve mantenere la coerenza sotto trasformazioni geometriche. 
+    Qualsiasi \textbf{trasformazione lineare} 
+    \( \phi : \mathbb{G}_{d,0,1} \rightarrow \mathbb{G}_{d,0,1} \) deve essere 
+    della forma:
 
-    \textbf{Formula Generale:}  
     \[
         \phi(x) = \sum_{k = 0}^{d+1} w_k {\langle x \rangle}_k + 
         \sum_{k = 0}^{d} v_k e_0 {\langle x \rangle}_k
@@ -179,45 +183,53 @@
     \end{itemize}
 \end{frame}
 
-% TODO: Approfondire e spiegare meglio 
 \begin{frame}{Prodotti Geometrici Bilineari}
-    (Da Approfondire).\\
     Per permettere alla rete di costruire nuove caratteristiche geometriche da quelle 
     esistenti, come il vettore di traslazione tra due punti, sono necessarie due 
     primitive aggiuntive. 
     \begin{itemize}
         \item \textbf{Prodotto geometrico} \(x, y \rightarrow xy \), consente di mescolare fa 
         loro diversi tipi di componenti geometriche, come vettori e piani.
-        \item \textbf{Join} \( x,y \rightarrow (x^* \wedge y^*)^* \) operazione bilineare 
+        \item \textbf{Join} \( \text{EquiJoin}(x,y,z) = z_{0123}(x^* \wedge y^*)^* \) operazione bilineare 
         che include il duale per rappresentare caratteristiche semplici come la distanza 
         euclidea. Il join viene reso equivariante anche rispetto alle riflessioni, 
-        moltiplicandolo per uno pseudoscalare
+        moltiplicandolo per un componente pseudoscalare di un multivettore \(z\)
     \end{itemize}
 \end{frame}
 
 \begin{frame}{Non-linearità e Normalizzazione}
-    La non-linearità utilizzata è la Gated-GELU, applicata al componente scalare del 
-    multivettore. La normalizzazione LayerNorm è \( E(3) \)-equivariante, calcolata su 
-    canali con in prodotto interno invariati di \( \mathbb{G}_{3,0,1} \)
+    \textbf{Nonlinearità}: \\
+    Utilizziamo la \textbf{Gated GELU} per introdurre non linearità: 
+    \[
+    \text{GatedGELU}(x) = \text{GELU}(x_1) \cdot x
+    \]
+    dove \(x_1\) è la componente scalare di \(x\).
+
+    \textbf{Normalizzazione}: \\
+    Definiamo una \textbf{LayerNorm equivariante}:
+    \[
+    \text{LayerNorm}(x) = \frac{x}{\sqrt{\mathbb{E}_c \langle x, x \rangle}}
+    \]
+    con il prodotto interno invariato \(\langle \cdot, \cdot \rangle\).
+
 \end{frame}
 
 \begin{frame}{Attenzione Multivettoriale Equivariante E(3)} 
-    (Da Approfondire).\\
-    L'attenzione multivettoriale equivariante E(3) è una versione adattata del meccanismo 
-    di attenzione standard, progettata per lavorare con dati multivettoriali.
-
-    Si parte da tensori di query, key e value, ciascuno con \( n_i \) elementi (o token) 
-    e \( n_c \) canali.
-    \begin{itemize}
-        \item L'attenzione viene calcolata usando un prodotto interno scalato:
-        \[
-            \text{Attention}(q, k, v)_{i' c'} = \text{Softmax}_i 
-            \left( \frac{\sum_i P_c \langle q_{i' c}, k_{i c} \rangle}{\sqrt{8 n_c}} \right) v_{i c'}
-        \]
-        \item Qui, \( \langle \cdot, \cdot \rangle \) è il prodotto interno invariante 
-        dell’algebra geometrica \( G_{3,0,1} \), basato sul normale prodotto scalare \( R^8 \).
-    \end{itemize}
     
+\textbf{Attenzione multivettoriale equivariante}: \\
+Dato un insieme di \textbf{query}, \textbf{key}, e \textbf{value} rappresentati 
+da tensori multivettoriali, la \textbf{Attenzione E(3)-equivariant} è definita come:
+\[
+\text{Attention}(q, k, v)_{i' c'} = \sum_{i} \text{Softmax}_i 
+\left( \frac{\sum_c\langle q_{i'c}, k_{ic} \rangle}{\sqrt{8n_c}} \right) v_{ic'}
+\]
+dove \(i\) e \(i'\) indicano gli oggetti (o token), \(c\) e \(c'\) indicano i canali, 
+e \(\langle \cdot, \cdot \rangle\) è il prodotto interno invariato dell'algebra geometrica.
+
+Il meccanismo utilizza il prodotto interno di \(G_{3,0,1}\), simile all'attenzione scalare 
+nel trasformatore originale, ma applicato su 8 delle 16 dimensioni 
+(escludendo le dimensioni contenenti \(e_0\)).
+
 \end{frame}
 
 \begin{frame}{Estensioni dell'Architettura GATr}
@@ -260,8 +272,10 @@
 
 \begin{frame}{\( n \)-body dynamics}
     \begin{itemize}
-        \item \textbf{Obiettivo:} Valutare la capacità di GATr di prevedere le posizioni finali di corpi celesti (una stella e pianeti) in un sistema gravitazionale.
-        \item \textbf{Dataset:} Dati sintetici generati con posizioni, velocità e masse campionate da distribuzioni specifiche, con trasformazioni casuali per migliorare la generalizzazione.
+        \item \textbf{Obiettivo:} Valutare la capacità di GATr di prevedere le posizioni finali di 
+        corpi celesti (una stella e pianeti) in un sistema gravitazionale.
+        \item \textbf{Dataset:} Dati sintetici generati con posizioni, velocità e masse campionate da 
+        distribuzioni specifiche, con trasformazioni casuali per migliorare la generalizzazione.
         \item \textbf{Modelli di Confronto:}
         \begin{itemize}
             \item Transformer e MLP
@@ -275,15 +289,15 @@
 \begin{frame}{Risultati dell'Esperimento}
     \begin{figure}
         \centering
-        \includegraphics[width=0.9\textwidth]{../Images/n-body.png}
-        % add caption
+        \includegraphics[width=0.8\textwidth]{../Images/n-body.png}
+        \caption{Errore nella previsione delle posizioni dei pianeti in funzione delle 
+        dimensioni del dataset. A sinistra: senza spostamento di distribuzione; al centro: 
+        con più pianeti di quelli addestrati; a destra: su dati traslati.}
     \end{figure}
 
-    GATr supera tutti i modelli di riferimento  in termini di efficienza dei dati, 
-    raggiungendo un errore di predizione inferiore con un minor numero di campioni di 
-    addestramento. GATr mostra anche una buona generalizzazione, ottenendo risultati 
-    promettenti su sistemi con un numero di corpi maggiore rispetto a quelli utilizzati 
-    durante l'addestramento e su dati traslati nello spazio.
+    GATr supera i modelli di riferimento in efficienza dei dati, mostrando errori di 
+    predizione più bassi con meno campioni. Generalizza bene anche su sistemi con più 
+    pianeti e su dati traslati.
 \end{frame}
 
 \begin{frame}{Stima dello Stress di Parete nelle Arterie Umane}
@@ -306,23 +320,21 @@
     \begin{figure}
         \centering
         \includegraphics[width=0.5\textwidth]{../Images/arteries.png}
-        % add caption
     \end{figure}
-
-    \textbf{GATr} supera tutti i modelli di riferimento in termini di accuratezza e 
-    di efficienza nell'utilizzo dei dati, sia su dati non canonizzati 
-    (con mesh ruotate casualmente) che su dati canonizzati 
-    (con mesh orientate nella stessa direzione).
+    
+        \textbf{GATr} supera tutti i modelli di riferimento in termini di accuratezza e 
+        di efficienza nell'utilizzo dei dati, sia su dati non canonizzati 
+        (con mesh ruotate casualmente) che su dati canonizzati 
+        (con mesh orientate nella stessa direzione).
 \end{frame}
 
 \begin{frame}{Pianificazione Robotica tramite Diffusione Invariante}
-    (Approfondire)\\
     \begin{itemize}
-        \item \textbf{Obiettivo:} Usare GATr come modello di diffusione per la 
-        pianificazione robotica.
+        \item \textbf{Obiettivo:} Usare GAT come Diffuser \(E(3)\)-invariante per 
+        la pianificazione robotica. 
         \item \textbf{Compito:} Un braccio robotico Kuka deve impilare blocchi su un 
         tavolo. Il reward è la probabilità di successo.
-        \item \textbf{Dataset:} 11,000 dimostrazioni di esperti.
+        \item \textbf{Dataset:} 11,000 dimostrazioni effettuate in precedenza
         \item \textbf{Modelli di Confronto:}
         \begin{itemize}
             \item Modelli di diffusione tradizionali (Diffuser, Transformer)
@@ -336,13 +348,12 @@
 \begin{frame}{Risultati dell'Esperimento}
     \begin{figure}
         \centering
-        \includegraphics[width=0.4\textwidth]{../Images/Kena.png}
+        \includegraphics[width=0.5\textwidth]{../Images/Kena.png}
     \end{figure}
 
-    GATr, utilizzato come backbone di un modello di diffusione, supera tutti i modelli 
-    di riferimento nel compito di impilamento dei blocchi, dimostrando una maggiore 
-    efficienza nell'utilizzo dei dati e ottenendo risultati migliori con un minor numero 
-    di traiettorie di addestramento.
+    GATr-Diffuser supera tutti i modelli di riferimento nel compito di impilamento dei 
+    blocchi, dimostrando una maggiore efficienza nell'utilizzo dei dati e ottenendo 
+    risultati migliori con un minor numero di traiettorie di addestramento.
 \end{frame}
     
 \begin{frame}{Conclusioni}
