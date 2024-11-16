@@ -1,3 +1,242 @@
-\begin{frame}{The frame title}
-    \[\]
+\begin{frame}{Isometrie}
+   Dato uno spazio vettoriale $V$ definiamo un’isometria come una funzione biiettiva $f: V\rightarrow V$ tale che per ogni coppia di multivettori $(u,v)\in V$ , $d(u,v) = d(f(u), f(v))$. Dove $d$ indica la distanza tra i due multivettori.
+   \\Ovvero una qualsiasi trasformazione geometrica che preserva le distanze tra i punti.
+   Le isometrie, a seconda delle trasformazioni geometriche che rappresentano, possono essere classificate in: riflessioni, rotazioni, traslazioni, roto-riflessioni
+\end{frame}
+
+\begin{frame}{Teorema di Cartan-Dieudonné}
+   Il teorema di Cartan-Dieudonné afferma che ogni trasformazione ortogonale di uno spazio \(n\)-dimensionale può essere decomposto in, al più , \(n\) riflessioni su iperpiani.
+   Alla luce di questo teorema introduciamo la definizione di isometria impropria: isometria composta da un numero dispari di riflessioni. 
+   \\È importante notare che tale tipo di isometria altera la chiralità dello spazio
+\end{frame}
+
+\begin{frame}{\(Pin(n)\) Group}
+   In uno spazio n-dimensionale, le composizioni di riflessioni formano il \(Pin(n)\) group, un potente strumento per modellare le isometrie:
+   Il gruppo \((G, \circ)\) è l’insieme non vuoto dotato di un'operazione binaria \(\circ : G \times G \rightarrow G\) che soddisfa le seguenti proprietà:
+   
+   \begin{enumerate}
+      \item \textbf{Chiusura:} \( uv \in G, \ \forall u, v \in G \)
+      \item \textbf{Associatività:} \( (uv)w = u(vw), \ \forall u, v, w \in G \)
+      \item \textbf{Identità:} \( \exists \, 1 \in G \mid 1u = u = u1, \ \forall u \in G \)
+      \item \textbf{Inverso:} \( \exists \, u^{-1} \in G \mid uu^{-1} = 1 = u^{-1}u, \ \forall u \in G \)
+    \end{enumerate}
+\end{frame}
+
+\begin{frame}{\(Pin(n)\) Group}
+   Poichè il Pin(n) Group è definito come l’insieme di tutte le possibili composizioni di riflessioni in uno spazio euclideo n-dimensionale
+   e soddisfa tutte le proprietà precedentemente elencate, esso forma un gruppo.
+   Di conseguenza ogni elemento di Pin(n) può essere definito da una composizione di k riflessioni linearmente indipendenti.
+\end{frame}
+
+\begin{frame}{Azione di gruppo: Coniugazione}
+   Un’azione di gruppo è un omomorfismo dal gruppo stesso al gruppo delle trasformazioni dello spazio,
+   in altre parole un’azione di gruppo associa ad ogni elemento del gruppo una specifica trasformazione dello spazio. 
+   Nel caso in cui un gruppo agisca su se stesso si parla di coniugazione, cioè una specifica mappa \(G \times G\rightarrow G\) che , dati \(u, v \in G\), definisce come un elemento del gruppo, che rappresenta una trasformazione,  agisce su un altro elemento dello stesso gruppo, che rappresenta un oggetto geometrico,  nel seguente modo:
+   \begin{equation}
+      u[v]\rightarrow uvu^{-1}
+   \end{equation}
+\end{frame}
+
+\begin{frame}{Azione di gruppo: Coniugazione}
+   Concludiamo quindi che la coniugazione offre un approccio elegante e efficiente per unificare le trasformazioni e gli oggetti e assicura che gli oggetti trasformati mantengano le loro proprietà fondamentali. 
+\end{frame}
+
+\begin{frame}{Rappresentazione degli elementi di \(Pin(p,q,r)\)}
+   Generalizzando il concetto di \(Pin(n)\)e considerando la firma dello spazio vettoriale, possiamo definire l’algebra geometrica \(G_{pqr}\)  che rappresenta gli elementi di  \(Pin(p,q,r)\)in cui:
+   \begin{enumerate}
+      \item \(p\) definisce il numero di dimensioni positive
+      \item \(q\) definisce il numero di dimensioni negative
+      \item \(r\) definisce il numero di dimensioni nulle
+   \end{enumerate}
+   Per uno spazio \(n\)-dimensionale si ha sempre che \(p+q+r = n\)
+\end{frame}
+
+\begin{frame}{Rappresentazione degli elementi di \(Pin(p,q,r)\)}
+   Si noti che la firma dello spazio influisce sulle trasformazioni geometriche rappresentabili e la preferenza di una specifica algebra geometrica dipende dalla geometria del problema e dalle trasformazioni da modellare.\\
+   Come discusso precedentemente l’operazione fondamentale per la rappresentazione di isometrie è la riflessione, di conseguenza definendo la rappresentazione della riflessione sarà possibile definire tutti gli elementi di \(Pin(p,q,r)\)
+\end{frame}
+
+\begin{frame}{Rappresentazione degli elementi di \(Pin(p,q,r)\)}
+   Consideriamo un iperpiano passante per l’origine rappresentato da un vettore di grado 1 in \(G_{pqr}\). 
+   Tale vettore ha due componenti: la parte vettoriale che rappresenta la normale all’iperpiano \(n=[a\ b\ c]^{T}\) e la distanza dall’origine \(\delta\) (=0 in nel caso che stiamo considerando)
+   \[
+      ax+by+cz+...+\delta =0 \leftrightarrow u:= ae_1+be_2+ce_3...+\delta e_0
+   \]
+\end{frame}
+
+\begin{frame}{Riflessione in \(Pin(p,q,r)\)}
+   Si noti che considerati un vettore e il suo negativo essi hanno stessa parte vettoriale e di conseguenza identificano lo stesso iperpiano. 
+   Questa considerazione è fondamentale per definire in maniera corretta e coerente l’operazione di riflessione su un iperpiano indipendentemente dal vettore scelto per rappresentare l’iperpiano.
+   A questo scopo introduciamo il segno meno e definiamo una riflessione:
+   \begin{equation}
+      v\to -uvu^{-1}
+   \end{equation}
+\end{frame}
+
+\begin{frame}{Composizioni di riflessioni in \(Pin(p,q,r)\)}
+   Componendo due o più riflessioni si ottengono altri elementi del gruppo \(Pin(n)\), di seguito mostriamo che una biriflessione equivale a una rotazione come suggerito dalla presenza del bivettore \(u_{1}u_{2}\)
+   \[
+   \begin{aligned}
+      v &\to -u_1vu^{-1}\\
+      &=-u_2(-u_1vu^{-1})u_2^{-1}\\
+      &=(u_2u_1)v(u_2u_1)^{-1}
+   \end{aligned}
+   \]
+\end{frame}
+
+\begin{frame}{Azione di gruppo in \(Pin(p,q,r)\)}
+   Infine notando che la composizione di riflessioni modifica la chiralità  dello spazio, definiamo un azione di gruppo nel seguente modo
+   \begin{equation}
+      v \to u[v]:=(-1)^{kl}uvu^{-1}
+   \end{equation}
+   dove \(u\) e \(v\) sono espressi come combinazioni lineare di, rispettivamente, \(k\) e \(l\) riflessioni. Il -1 assicura che l’orientazione dello spazio sia corretta.
+   
+\end{frame}
+
+\begin{frame}{Geometric Clifford Algebra Networks (GCAN)}
+   Le Geometric Clifford Algebra Networks (GCAN) rappresentano una nuova frontiera nell’ambito delle reti neurali, utilizzando l’algebra geometrica come base per la rappresentazione e manipolazione dei dati geometrici. 
+   Questo approccio si fonda su un potente framework matematico che consente di trattare in modo unificato ed efficiente oggetti e trasformazioni geometriche come rotazioni, traslazioni e riflessioni.
+\end{frame}
+
+\begin{frame}{Geometric Clifford Algebra Networks (GCAN)}
+   Le GCAN sfruttano i vantaggi di questa rappresentazione per costruire modelli capaci di apprendere e applicare trasformazioni geometriche in modo intrinsecamente coerente con le proprietà dello spazio dei dati. 
+   A differenza degli approcci tradizionali basati sull’algebra lineare, dove oggetti e trasformazioni devono essere rappresentati separatamente, il framework dell’algebra geometrica riduce la complessità e minimizza le incongruenze geometriche.
+\end{frame}
+
+\begin{frame}{Principali vantaggi di GCAN}
+   \begin{itemize}
+      \item Rappresentazione unificata di oggetti e trasformazioni: 
+      L’algebra geometrica consente di trattare in modo uniforme diversi tipi di oggetti geometrici e le loro trasformazioni. Questo approccio semplifica l’implementazione dei modelli e migliora la loro efficienza operativa.
+      
+      \item Trasformazioni covarianti: 
+      Gli oggetti geometrici, rappresentati nell’algebra geometrica, si trasformano in modo coerente rispetto alle trasformazioni dello spazio. Ciò significa che le stesse regole di trasformazione possono essere applicate a diversi tipi di oggetti, mantenendo una coerenza intrinseca.
+   \end{itemize}
+\end{frame}
+
+\begin{frame}{Principali vantaggi di GCAN}
+   \begin{itemize}
+      \item Generalizzazione dimensionale: 
+      Le GCAN sono intrinsecamente indipendenti dalla dimensionalità dello spazio. Questo consente di applicare lo stesso modello a dati di diverse dimensioni senza modifiche sostanziali all’architettura della rete.
+   \end{itemize}
+\end{frame}
+
+\begin{frame}{Concetti fondamentali delle GCAN}
+   Le GCAN si basano sull'idea di preservare la coerenza geometrica durante le trasformazioni. Questo si riflette in due proprietà chiave:
+   \begin{itemize}
+      \item Conservazione del tipo degli oggetti geometrici:
+      Dopo una trasformazione gli oggetti geometrici mantengono il loro tipo originario. Questo corrisponde, in algebra geometrica, alla conservazione del grado dei multivettori.
+      \item Trasformazioni basate su azioni di gruppo
+      Le trasformazioni sono eseguite come combinazioni lineari di azioni di gruppo, che garantiscono la validità geometrica delle operazioni. In particolare, le GCAN sfruttano il gruppo\(Pin(p,q,r)\) che preserva le proprietà geometriche dello spazio durante le trasformazioni.
+   \end{itemize}
+\end{frame}
+
+\begin{frame}{Concetti fondamentali delle GCAN: Group Action Layers}
+   I Group Action Layers sono strati neurali che implementano le trasformazioni geometriche nelle GCAN. Questi strati utilizzano le azioni di gruppo per applicare le trasformazioni geometriche agli input in modo controllato e coerente.
+   Dato un gruppo \(G\), uno spazio vettoriale \(X\), un’azione di gruppo \(\alpha:G\times X \to X\),  essi sono definiti in termini generali dalla seguente scrittura:
+   \[
+      x \to T_{g,w}(x):=\sum^{c}_{i=1}w_i\cdot\alpha(g_i, x_i) 
+   \]
+   Questa trasformazione calcola una combinazione lineare pesata delle azioni di gruppo, modulata dai pesi \(w_i\) ottimizzati durante l'addestramento della rete
+\end{frame}
+
+\begin{frame}{Esperimento: Tetris}
+   Obiettivo: Modellare traiettorie complesse di oggetti rigidi\\
+   Gli oggetti, inizialmente posizionati all'origine, vengono sottoposti a una serie di traslazioni e rotazioni casuali attorno ai rispettivi centri di massa.
+   Tali movimenti non sono indipendenti: le rotazioni e le traslazioni risultano correlate, generando una dipendenza tra le varie trasformazioni.
+   Inoltre per rendere il modello ancora più realistico, a ogni parte dell’oggetto viene aggiunto un rumore gaussiano condizionato, simulando piccole deformazioni che potrebbero verificarsi durante il movimento.
+\end{frame}
+
+\begin{frame}{Modelli utilizzati}
+   L'esperimento utilizza due tipi di reti basati su GCAN:
+   \begin{itemize}
+      \item GCA-MLP: una rete multistrato perceptron (MLP) opportunamente modificata per integrare i GCA Linear Layers
+      \item GCA-GNN: una rete neurale a grafi (GNN) adattata per sfruttare i vantaggi dei layer GCA.
+   \end{itemize}
+   Entrambi i modelli sfruttano l’algebra geometrica \(G_{3,0,1}\), particolarmente adatta per descrivere movimenti rigidi nello spazio euclideo. 
+   All’interno di questa algebra, i punti degli oggetti Tetris sono rappresentati come trivettori, che codificano l’intersezione di tre piani per determinare un punto nello spazio.
+   Le trasformazioni geometriche, come rotazioni e traslazioni, vengono applicate utilizzando l’operazione di "sandwich".
+\end{frame}
+
+\begin{frame}{Obiettivo e valutazioni}
+   L’obiettivo principale dei modelli è prevedere, a partire dalle posizioni degli oggetti in quattro istanti temporali consecutivi, le loro posizioni nei momenti successivi. 
+   Per valutare le prestazioni dei modelli, viene utilizzato l’errore quadratico medio (MSE) calcolato tra le posizioni previste e quelle reali.
+\end{frame}
+
+\begin{frame}{Risultati}
+   Come si può vedere dal grafico, le GCAN hanno dimostrato una capacità di generalizzazione superiore rispetto ad approcci tradizionali come reti MLP standard, MotorMLP, SO(3)-MLP, O(3)-MLP, EdgeConv GNN e altre varianti di GNN. 
+   Questa superiorità è stata particolarmente evidente in scenari con quantità limitata di dati di addestramento. Tale risultato è attribuibile al forte bias induttivo introdotto dai layer GCA, che vincolano le trasformazioni a rispettare rigorosamente la struttura geometrica dei dati.
+\end{frame}
+
+\begin{frame}{Limitazioni GCAN}
+   Le principali limitazioni legate alle GCAN riguardano la complessità computazionale delle operazioni algebriche e la necessità di ottimizzare l’implementazione per l’hardware. Infatti le operazioni algebriche, in particolare il prodotto geometrico, richiedono un  maggiore carico computazionale rispetto alle operazioni standard dell’algebra lineare. 
+   Questo si traduce in un aumento dei tempi di esecuzione e maggiori requisiti di memoria. 
+   Dall'altro lato vi è la necessità di ottimizzare l’implementazione per sfruttare al meglio l’hardware disponibile. Infatti le operazioni algebriche complesse possono non essere ben supportate dalle librerie ottimizzate per calcoli lineari, richiedendo adattamenti specifici o sviluppo di soluzioni personalizzate per garantire l'efficienza.
+\end{frame}
+
+\begin{frame}{Rotori}
+   Definendo il rotore coome il prodotto geometrico di un numero pari di vettori con \(R=u_1u_2...u_k\) e il suo inverso  \(\tilde{R} = u_ku_{k-1}...u_1\) possiamo definire il prodotto sandwich \(v'=Rv\tilde{R}\). 
+   \\Tale prodotto rappresenta la rotazione di un oggetto in uno spazio 3D e appartiene al gruppo \(Spin(n)\)
+   \\Si noti che nel caso in cui k non sia pari, \(v'\) rappresenta una roto-riflessione ovvero una trasformazione che combina una rotazione e una riflessione
+\end{frame}
+
+\begin{frame}{Algebra geometrica conforme (CGA)}
+   L’algebra geometrica conforme è un potente strumento matematico che estende l’algebra geometrica standard per modellare in modo efficiente la geometria euclidea incorporando lo spazio euclideo 3d in uno spazio di dimensioni superiori introducendo due punti speciali: il punto all’origine e il punto all’infinito
+   \begin{itemize}
+      \item punto all’origine : Fornisce un punto di riferimento da cui vengono misurate le distanze e le direzioni 
+      \item punto all’infinito : Consente di rappresentare le traslazioni come rotazioni attorno a punti all’infinito permettendo di unificare la rappresentazioni delle trasformazioni di rotazione e traslazione.
+   \end{itemize}
+\end{frame}
+
+\begin{frame}{1D-Up CGA}
+   Nel caso di 1D-Up CGA, lo spazio euclideo viene incorporato in uno spazio 4D aggiungendo una sola dimensione extra.
+   La 1D-UP CGA utilizza l’algebra \(G_{4,0,0}\) che abbrevieremo in \(G_{4,0}\). In questa algebra i punti nello spazio 3D vengono mappati nello spazio 4D utilizzando la seguente funzione specifica:
+   \begin{equation}
+      X = f(x) = \frac{2\lambda}{\lambda^2 + x^2} \, x + \frac{\lambda^2 - x^2}{\lambda^2 + x^2} \, e_4
+   \end{equation}
+   Dove \(\lambda \) è uno scalare che indica la curvatura dello spazio sferico 4D e \(e_4\) è il vettore di base per la quarta dimensione 
+\end{frame}
+
+\begin{frame}{Motori}
+   In \(G_{4,0}\) un rotore può rappresentare sia una traslazione che una rotazione. \\Dato un vettore di traslazione \(t \in G_{3,0}\) il rotore corrispondente è dato da: 
+   \[
+      T = g(t) = \frac{\lambda + t e_4}{\sqrt{\lambda^2 + t^2}}
+   \]
+   Si può quindi esprimere la traslazione o rotazione di un oggetto \(X\) in \(X'\) tramite la combinazione di due sandwich products
+   \begin{equation}
+      X'=TRX\tilde{R}\tilde{T} = MX\tilde{M}
+   \end{equation}
+\end{frame}
+
+\begin{frame}{Motori}
+   Il prodotto geometrico \(M= TR\) rappresenta un motore
+   I motori permettono di unificare la rappresentazione di rotazione e traslazione in unica entità permettendo di semplificare la rappresentazione della posa e nell’algebra considerata un motore è definito da 1 scalare, 6 bivettori e 1 quadrivettore:
+   \begin{align*}
+      M &= x_{01} \\
+          &+ x_{12}e_{12}
+          + x_{13}e_{13}
+          + x_{14}e_{14} 
+          + x_{23}e_{23} 
+          + x_{24}e_{24} 
+          + x_{34}e_{34} \\
+          & + x_{1234}e_{1234}
+      \end{align*}
+      Dove i bivettori rappresentano i piani di rotazione e l'ampiezza della rotazione è determinata dai rispettivi coefficienti mentre il quadrivettore rappresenta la traslazione nello spazio euclideo
+\end{frame}
+
+\begin{frame}{CGAPoseNet+GCAN}
+   L’architettura CGAPoseNet+GCAN è progettata per la regressione della posa della telecamera da immagini RGB e si basa sull’algebra CGA 1D-Up vista in precedenza. 
+   \\Il principale obiettivo di questa architettura è superare il modello CGAPoseNet che si limita a predire i coefficienti dei motori senza sviluppare  una comprensione del loro significato geometrico o di come eseguire trasformazioni geometriche su di essi.
+\end{frame}
+
+\begin{frame}{CGAPoseNet+GCAN }
+   La consapevolezza geometrica è fondamentale per la regressione accurata della posa della telecamera e la capacità di comprendere le relazioni spaziali tra gli oggetti nella scena e di eseguire trasformazioni geometriche sulle pose previste, consente alla rete di:
+   \begin{itemize}
+      \item Generalizzare meglio dati non visti in precedenza
+      \item Interpretare meglio i risultati
+   \end{itemize}
+\end{frame}
+
+\begin{frame}{CGAPoseNet+GCAN: Pipeline}
+   La pipeline inizia con l’estrazione delle caratteristiche significative da un dataset di immagini tramite un modello pre-addestrato(InceptionV3). Queste caratteristiche vengono utilizzate nel penultimo strato di InceptionV3 per generare  una matrice 256x8 dove ogni riga rappresenta un motor proposals e ogni colonna i suoi coefficienti.
+   
 \end{frame}
