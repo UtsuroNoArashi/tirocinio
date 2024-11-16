@@ -237,6 +237,49 @@
 \end{frame}
 
 \begin{frame}{CGAPoseNet+GCAN: Pipeline}
-   La pipeline inizia con l’estrazione delle caratteristiche significative da un dataset di immagini tramite un modello pre-addestrato(InceptionV3). Queste caratteristiche vengono utilizzate nel penultimo strato di InceptionV3 per generare  una matrice 256x8 dove ogni riga rappresenta un motor proposals e ogni colonna i suoi coefficienti.
+   La pipeline inizia con l’estrazione delle caratteristiche significative da un dataset di immagini tramite un modello pre-addestrato(InceptionV3).
+   \\Queste caratteristiche vengono utilizzate nel penultimo strato di InceptionV3 per generare una matrice \(256\times 8\) dove ogni riga rappresenta una proposta di motore, ovvero una possibile posa della fotocamera, e ogni colonna i suoi coefficienti.
+\end{frame}
+
+\begin{frame}{GAPoseNet+GCAN: Pipeline}
+   A questo punto la GCAN elabora le proposte dei motori attraverso tre strati densi con prodotto sandwich, raffinandole progressivamente secondo la seguente funzione, fino ad ottenere il motore ottimale
+   \[
+      h(M) = \sum_{i=1}^{c} W_i M_i \tilde{W}_i + B_i
+   \]
+   Dove \(c\) è il numero di canali, \(M=\{M_i\}^{c}_{i=1}\) è l’insieme di motori per canale, \(W_i\) rappresentano i pesi e \(B_i\) rappresentano i bias.
+\end{frame}
+
+\begin{frame}{GAPoseNet+GCAN: Pipeline}
+   Inoltre la notazione maiuscola indica che \(W_i, M_i,B_i \in G_{4,0}\) e che contengono un numero pari di blades. Questo implica che:
+   \begin{itemize}
+      \item Ogni neurone in un layer rappresenta una trasformazione geometrica del suo input preservando il grado degli oggetti 
+      \item Ogni ouput del GCAN layer è anch’esso un motore 
+   \end{itemize}
+\end{frame}
+
+\begin{frame}{Dettagli esperimento: dataset }
+   Il setup sperimentale presenta un aspetto particolarmente interessante nella differenza di trattamento tra i dataset indoor e outdoor.
+   Per i dataset outdoor, come Cambridge Landmarks, il modello è stato ri-addestrato due volte utilizzando learning rate progressivamente decrescenti, mentre per i dataset indoor, come 7 Scenes, è stato sufficiente un unico ciclo di addestramento. 
+\end{frame}
+
+\begin{frame}{Dettagli esperimento: ottimizzazione}
+   \begin{itemize}
+      \item Durante il training, il modello è stato ottimizzato utilizzando il Mean Squared Error (MSE) come funzione di perdita, con pesi inizializzati da un modello pre-addestrato su ImageNet. 
+      \item L'addestramento, condotto per 100 epoche con batch size 64, ha impiegato l'ottimizzatore Adam con un learning rate iniziale di \(10^{-4}\) e decadimento esponenziale per una convergenza stabile. 
+      \item Per prevenire l'overfitting, è stato adottato l’early stopping con una pazienza di 12 epoche.
+   \end{itemize}
+\end{frame}
+
+\begin{frame}{Dettagli esperimento: risultati}
+   \begin{itemize}
+      \item I risultati sperimentali confermano la superiorità del modello CGAPoseNet+GCAN rispetto alle reti PoseNet tradizionali e alle loro varianti.
+      \item Ha registrato errori significativamente inferiori nella stima delle pose sia in termini di rotazione che di traslazione: su 13 dataset, ha ottenuto prestazioni migliori in 11 per la rotazione e in 8 per la traslazione.
+      \item Dal punto di vista dell’efficienza, CGAPoseNet+GCAN ha ridotto il numero di parametri del modello del 17\% rispetto alla versione base di CGAPoseNet, mantenendo invariato il costo computazionale
+   \end{itemize}
+\end{frame}
    
+\begin{frame}{Dettagli esperimento: conclusioni}
+   Queste caratteristiche rendono la rete particolarmente interessante non solo per la sua accuratezza, ma anche per la leggerezza e la scalabilità.
+    Inoltre, l’integrazione tra l’output geometrico del backbone e la manipolazione esplicita tramite i GCAN layers rappresenta un’innovazione che unisce deep learning e geometria computazionale. 
+    Tale approccio conferma l’efficacia del modello e apre nuove prospettive per il miglioramento delle reti neurali in compiti di visione artificiale che richiedono una consapevolezza geometrica avanzata.
 \end{frame}
