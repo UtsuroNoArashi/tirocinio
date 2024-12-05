@@ -1,13 +1,18 @@
-import toml
-# from gatr.experiments.nbody import NBodyExperiment
+#!/usr/bin/env python3
+# Copyright (c) 2023 Qualcomm Technologies, Inc.
+# All rights reserved.
 
-def main():
-    cfg = toml.load("GATr/config2/nbody.toml")
+import hydra
 
-    name = cfg["run_name"]
-    print(name)
-    # exp = NBodyExperiment(cfg)
-    # exp()
+from gatr.experiments.nbody import NBodyExperiment
+
+
+@hydra.main(config_path="../config", config_name="nbody", version_base=None)
+def main(cfg):
+    """Entry point for n-body experiment."""
+    exp = NBodyExperiment(cfg)
+    exp()
+
 
 if __name__ == "__main__":
     main()
