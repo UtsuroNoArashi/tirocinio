@@ -1,13 +1,3 @@
-## Code quality
-black~=22.8.0
-isort~=5.13.2
-mypy==1.1.1
-pydocstyle
-pylint~=2.15.0
-pytest-cov==3.0.0
-pytest==7.0.1
-xenon==0.9.0
-
 ## Types
 types-tqdm
 
@@ -24,6 +14,7 @@ numpy==1.23
 pandas<2.0.0
 scipy
 seaborn
+plotly
 
 ## Standard utils
 celluloid
@@ -58,38 +49,3 @@ xformers==0.0.25
 
 ## Project-specific: baselines
 git+https://github.com/microsoft/cliffordlayers.git@74799cf4588a065916305bfcf2f030d84918f0ad  # The current version on pip (0.1.1) doesn't have GCAN yet
-
-# segnn
-e3nn>=0.4.1
-torch_geometric>=2.0.9
-
-# se3-transformer
-absl-py
-certifi
-chardet
-cycler
-Cython
-dgl-cu110
-git+https://github.com/AMLab-Amsterdam/lie_learn.git
-grpcio
-idna
-joblib
-kiwisolver
-Markdown
-packaging
-protobuf
-pyparsing
-python-dateutil
-requests
-scikit-learn
-six
-tensorboard
-urllib3
-Werkzeug
-
-# Coronary Mesh Convolution
-openmesh>=1.2.1
-potpourri3d>=0.0.8
-prettytable
-trimesh>=3.15.3
-vtk>=9.2.2
