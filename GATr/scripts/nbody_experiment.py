@@ -3,7 +3,8 @@
 # All rights reserved.
 
 import hydra
-
+import sys
+sys.path.append("../")
 from gatr.experiments.nbody import NBodyExperiment
 
 
