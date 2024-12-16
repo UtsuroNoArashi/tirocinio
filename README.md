@@ -44,3 +44,5 @@ First, we need to generate training and evaluation datasets. From the `GATr` fol
 ```bash
 python scripts/generate_nbody_dataset.py
 ```
+
+Note: The process can be killed if you not have enough RAM !
