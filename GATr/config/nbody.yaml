@@ -1,10 +1,10 @@
 exp_name: nbody
 run_name: ???
 
-base_dir : ???
+base_dir : "GATrExperiments"
 exp_dir: '${base_dir}/experiments/${exp_name}/${run_name}'
 
-seed: ???
+seed: 42
 debug: false
 
 checkpoint: null

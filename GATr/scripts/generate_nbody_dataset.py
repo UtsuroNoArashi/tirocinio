@@ -2,7 +2,7 @@
 # Copyright (c) 2023 Qualcomm Technologies, Inc.
 # All rights reserved.
 import sys
-sys.path.append("../")
+sys.path.append("")
 from pathlib import Path
 
 import hydra
