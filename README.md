@@ -46,3 +46,9 @@ python scripts/generate_nbody_dataset.py
 ```
 
 Note: The process can be killed if you not have enough RAM !
+
+After than we can run the n-body experiment running this command from the `GATr` folder : 
+
+```bash
+python scripts/nbody_experiment.py
+```

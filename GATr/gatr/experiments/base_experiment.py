@@ -15,6 +15,7 @@ import numpy as np
 import pandas as pd
 import seaborn as sns
 import torch
+import torch.onnx
 from hydra.core.config_store import ConfigStore
 from hydra.utils import instantiate
 from omegaconf import OmegaConf
@@ -105,6 +106,7 @@ class BaseExperiment:
                 self.train()
                 # Save model
                 self.save_model("model_final.pt")
+                self.save_model_onnx("model_final.onnx")
 
             # Evaluate
             if evaluate:
@@ -337,6 +339,46 @@ class BaseExperiment:
             logger.debug(f"Saving EMA model at {ema_path}")
             assert ema_path != model_path
             torch.save(self.ema.state_dict(), ema_path)
+
+
+    def save_model_onnx(self, onnx_filename=None):
+        """Save model in experiment folder and as ONNX file.
+
+        Parameters
+        ----------
+        onnx_filename : None or str
+            Filename to save the model in ONNX format. If None, it won't save as ONNX.
+        """
+        assert self.model is not None
+
+        
+
+        # Salvataggio in formato ONNX, se il nome del file è fornito
+        if onnx_filename is not None:
+            onnx_model_path = Path(self.cfg.exp_dir) / "models" / onnx_filename
+            logger.info(f"Saving model in ONNX format at {onnx_model_path}")
+
+            # Impostare il modello in modalità di valutazione
+            self.model.eval()
+
+            # Dummy input per il modello: (batch_size=1, num_objects=4, features=7)
+            dummy_input = torch.tensor([[
+                [1.0, 1.0, 2.0, 3.0, 0.1, 0.2, 0.3],  # Pianeta 1
+                [2.0, 4.0, 5.0, 6.0, 0.3, 0.4, 0.5],  # Pianeta 2
+                [3.0, 7.0, 8.0, 9.0, 0.6, 0.7, 0.8],  # Pianeta 3
+                [4.0, 10.0, 11.0, 12.0, 0.9, 1.0, 1.1],  # Pianeta 4
+            ]], dtype=torch.float32)  # Forma: (1, 4, 7)
+
+            # Converte il modello in formato ONNX
+            torch.onnx.export(self.model,
+                            dummy_input,
+                            "model_final.onnx",
+                            export_params=True,
+                            verbose=True
+            )
+
+            logger.info(f"Model saved as ONNX at {onnx_model_path}")
+
 
     def register_hook(self, function, step=None, every_steps=None):
         """Registers a hook.
