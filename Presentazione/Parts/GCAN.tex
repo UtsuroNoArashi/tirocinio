@@ -1,18 +1,28 @@
 \begin{frame}{Isometrie}
-   Dato uno spazio vettoriale $V$ definiamo un’isometria come una funzione biiettiva $f: V\rightarrow V$ tale che per ogni coppia di multivettori $(u,v)\in V$ , $d(u,v) = d(f(u), f(v))$. Dove $d$ indica la distanza tra i due multivettori.
-   \\Ovvero una qualsiasi trasformazione geometrica che preserva le distanze tra i punti.
-   Le isometrie, a seconda delle trasformazioni geometriche che rappresentano, possono essere classificate in: riflessioni, rotazioni, traslazioni, roto-riflessioni
+    Dato \(V\) uno spazio vettoriale, 
+    definiamo \emph{isometria} una funzione \(f \colon V \to V\) definita come segue:
+    \[
+        \forall \Vb{u}, \Vb{v} \in V, d(\Vb{u}, \Vb{v}) = d(f(\Vb{u}), f(\Vb{v}))
+    \]
+    con \(d\) funzione per il calcolo della distanza tra i multivettori.
+    In altri termini, ogni trasformazione geometrica che preserva le distanze
+    è un'isometria. In generale,
+    le isometrie sono classificate sulla base delle trasformazioni geometriche che rappresentano,
+    da ciò si parla di: riflessioni, rotazioni, traslazioni, roto-riflessioni
 \end{frame}
 
 \begin{frame}{Teorema di Cartan-Dieudonné}
-   Il teorema di Cartan-Dieudonné afferma che ogni trasformazione ortogonale di uno spazio \(n\)-dimensionale può essere decomposto in, al più , \(n\) riflessioni su iperpiani.
-   Alla luce di questo teorema introduciamo la definizione di isometria impropria: isometria composta da un numero dispari di riflessioni. 
-   \\È importante notare che tale tipo di isometria altera la chiralità dello spazio
+   Il teorema di Cartan-Dieudonné afferma che ogni trasformazione ortogonale
+   di uno spazio \(n\)-dimensionale può essere decomposto in, al più, 
+   \(n\) riflessioni su iperpiani.
+   Alla luce di questo teorema introduciamo la definizione di isometria impropria: 
+   isometria composta da un numero dispari di riflessioni. 
+   È importante notare che tale tipo di isometria altera la chiralità dello spazio
 \end{frame}
 
-\begin{frame}{\(Pin(n)\) Group}
-   In uno spazio n-dimensionale, le composizioni di riflessioni formano il \(Pin(n)\) group, un potente strumento per modellare le isometrie:
-   Il gruppo \((G, \circ)\) è l’insieme non vuoto dotato di un'operazione binaria \(\circ : G \times G \rightarrow G\) che soddisfa le seguenti proprietà:
+\begin{frame}{Pin(n) Group}
+   In uno spazio n-dimensionale, le composizioni di riflessioni formano il Pin(n) group, un potente strumento per modellare le isometrie:
+   Il gruppo \((G, \circ)\) è l’insieme non vuoto dotato di un'operazione binaria \(\circ : G \times G \to G\) che soddisfa le seguenti proprietà:
    
    \begin{enumerate}
       \item \textbf{Chiusura:} \( uv \in G, \ \forall u, v \in G \)
@@ -22,27 +32,30 @@
     \end{enumerate}
 \end{frame}
 
-\begin{frame}{\(Pin(n)\) Group}
+\begin{frame}
    Poichè il Pin(n) Group è definito come l’insieme di tutte le possibili composizioni di riflessioni in uno spazio euclideo n-dimensionale
    e soddisfa tutte le proprietà precedentemente elencate, esso forma un gruppo.
    Di conseguenza ogni elemento di Pin(n) può essere definito da una composizione di k riflessioni linearmente indipendenti.
 \end{frame}
 
 \begin{frame}{Azione di gruppo: Coniugazione}
-   Un’azione di gruppo è un omomorfismo dal gruppo stesso al gruppo delle trasformazioni dello spazio,
-   in altre parole un’azione di gruppo associa ad ogni elemento del gruppo una specifica trasformazione dello spazio. 
-   Nel caso in cui un gruppo agisca su se stesso si parla di coniugazione, cioè una specifica mappa \(G \times G\rightarrow G\) che , dati \(u, v \in G\), definisce come un elemento del gruppo, che rappresenta una trasformazione,  agisce su un altro elemento dello stesso gruppo, che rappresenta un oggetto geometrico,  nel seguente modo:
+    Un’azione di gruppo è un omomorfismo dal gruppo stesso al gruppo delle trasformazioni dello spazio,
+    in altre parole un’azione di gruppo associa ad ogni elemento del gruppo una specifica trasformazione dello spazio. 
+    Nel caso in cui un gruppo agisca su se stesso si parla di coniugazione, cioè una specifica mappa \(G \times G\to G\) che,
+    dati \(u, v \in G\), definisce come un elemento del gruppo, che rappresenta una trasformazione,
+    agisce su un altro elemento dello stesso gruppo, che rappresenta un oggetto geometrico, 
+    nel seguente modo:
    \begin{equation}
-      u[v]\rightarrow uvu^{-1}
+      u[v]\to uvu^{-1}
    \end{equation}
 \end{frame}
 
-\begin{frame}{Azione di gruppo: Coniugazione}
-   Concludiamo quindi che la coniugazione offre un approccio elegante e efficiente per unificare le trasformazioni e gli oggetti e assicura che gli oggetti trasformati mantengano le loro proprietà fondamentali. 
+\begin{frame}
+    Concludiamo quindi che la coniugazione offre un approccio elegante e efficiente per unificare le trasformazioni e gli oggetti e assicura che gli oggetti trasformati mantengano le loro proprietà fondamentali. 
 \end{frame}
 
-\begin{frame}{Rappresentazione degli elementi di \(Pin(p,q,r)\)}
-   Generalizzando il concetto di \(Pin(n)\)e considerando la firma dello spazio vettoriale, possiamo definire l’algebra geometrica \(G_{pqr}\)  che rappresenta gli elementi di  \(Pin(p,q,r)\)in cui:
+\begin{frame}{Rappresentazione degli elementi di Pin(p,q,r)}
+   Generalizzando il concetto di \(Pin(n)\) e considerando la firma dello spazio vettoriale, possiamo definire l’algebra geometrica \(G_{pqr}\)  che rappresenta gli elementi di  \(Pin(p,q,r)\) in cui:
    \begin{enumerate}
       \item \(p\) definisce il numero di dimensioni positive
       \item \(q\) definisce il numero di dimensioni negative
@@ -51,16 +64,16 @@
    Per uno spazio \(n\)-dimensionale si ha sempre che \(p+q+r = n\)
 \end{frame}
 
-\begin{frame}{Rappresentazione degli elementi di \(Pin(p,q,r)\)}
-   Si noti che la firma dello spazio influisce sulle trasformazioni geometriche rappresentabili e la preferenza di una specifica algebra geometrica dipende dalla geometria del problema e dalle trasformazioni da modellare.\\
+\begin{frame}
+    Si noti che la firma dello spazio influisce sulle trasformazioni geometriche rappresentabili e la preferenza di una specifica algebra geometrica dipende dalla geometria del problema e dalle trasformazioni da modellare.\\
    Come discusso precedentemente l’operazione fondamentale per la rappresentazione di isometrie è la riflessione, di conseguenza definendo la rappresentazione della riflessione sarà possibile definire tutti gli elementi di \(Pin(p,q,r)\)
 \end{frame}
 
-\begin{frame}{Rappresentazione degli elementi di \(Pin(p,q,r)\)}
-   Consideriamo un iperpiano passante per l’origine rappresentato da un vettore di grado 1 in \(G_{pqr}\). 
+\begin{frame}
+    Consideriamo un iperpiano passante per l’origine rappresentato da un vettore di grado 1 in \(G_{pqr}\). 
    Tale vettore ha due componenti: la parte vettoriale che rappresenta la normale all’iperpiano \(n=[a\ b\ c]^{T}\) e la distanza dall’origine \(\delta\) (=0 in nel caso che stiamo considerando)
    \[
-      ax+by+cz+...+\delta =0 \leftrightarrow u:= ae_1+be_2+ce_3...+\delta e_0
+      ax+by+cz+...+\delta =0 \iff u:= ae_1+be_2+ce_3+...+\delta e_0
    \]
 \end{frame}
 
@@ -98,8 +111,8 @@
    Questo approccio si fonda su un potente framework matematico che consente di trattare in modo unificato ed efficiente oggetti e trasformazioni geometriche come rotazioni, traslazioni e riflessioni.
 \end{frame}
 
-\begin{frame}{Geometric Clifford Algebra Networks (GCAN)}
-   Le GCAN sfruttano i vantaggi di questa rappresentazione per costruire modelli capaci di apprendere e applicare trasformazioni geometriche in modo intrinsecamente coerente con le proprietà dello spazio dei dati. 
+\begin{frame}
+    Le GCAN sfruttano i vantaggi di questa rappresentazione per costruire modelli capaci di apprendere e applicare trasformazioni geometriche in modo intrinsecamente coerente con le proprietà dello spazio dei dati. 
    A differenza degli approcci tradizionali basati sull’algebra lineare, dove oggetti e trasformazioni devono essere rappresentati separatamente, il framework dell’algebra geometrica riduce la complessità e minimizza le incongruenze geometriche.
 \end{frame}
 
@@ -113,7 +126,7 @@
    \end{itemize}
 \end{frame}
 
-\begin{frame}{Principali vantaggi di GCAN}
+\begin{frame}
    \begin{itemize}
       \item Generalizzazione dimensionale: 
       Le GCAN sono intrinsecamente indipendenti dalla dimensionalità dello spazio. Questo consente di applicare lo stesso modello a dati di diverse dimensioni senza modifiche sostanziali all’architettura della rete.
@@ -228,8 +241,8 @@
    \\Il principale obiettivo di questa architettura è superare il modello CGAPoseNet che si limita a predire i coefficienti dei motori senza sviluppare  una comprensione del loro significato geometrico o di come eseguire trasformazioni geometriche su di essi.
 \end{frame}
 
-\begin{frame}{CGAPoseNet+GCAN }
-   La consapevolezza geometrica è fondamentale per la regressione accurata della posa della telecamera e la capacità di comprendere le relazioni spaziali tra gli oggetti nella scena e di eseguire trasformazioni geometriche sulle pose previste, consente alla rete di:
+\begin{frame}
+    La consapevolezza geometrica è fondamentale per la regressione accurata della posa della telecamera e la capacità di comprendere le relazioni spaziali tra gli oggetti nella scena e di eseguire trasformazioni geometriche sulle pose previste, consente alla rete di:
    \begin{itemize}
       \item Generalizzare meglio dati non visti in precedenza
       \item Interpretare meglio i risultati
@@ -241,16 +254,16 @@
    \\Queste caratteristiche vengono utilizzate nel penultimo strato di InceptionV3 per generare una matrice \(256\times 8\) dove ogni riga rappresenta una proposta di motore, ovvero una possibile posa della fotocamera, e ogni colonna i suoi coefficienti.
 \end{frame}
 
-\begin{frame}{GAPoseNet+GCAN: Pipeline}
-   A questo punto la GCAN elabora le proposte dei motori attraverso tre strati densi con prodotto sandwich, raffinandole progressivamente secondo la seguente funzione, fino ad ottenere il motore ottimale
+\begin{frame}
+    A questo punto la GCAN elabora le proposte dei motori attraverso tre strati densi con prodotto sandwich, raffinandole progressivamente secondo la seguente funzione, fino ad ottenere il motore ottimale
    \[
       h(M) = \sum_{i=1}^{c} W_i M_i \tilde{W}_i + B_i
    \]
    Dove \(c\) è il numero di canali, \(M=\{M_i\}^{c}_{i=1}\) è l’insieme di motori per canale, \(W_i\) rappresentano i pesi e \(B_i\) rappresentano i bias.
 \end{frame}
 
-\begin{frame}{GAPoseNet+GCAN: Pipeline}
-   Inoltre la notazione maiuscola indica che \(W_i, M_i,B_i \in G_{4,0}\) e che contengono un numero pari di blades. Questo implica che:
+\begin{frame}
+    Inoltre la notazione maiuscola indica che \(W_i, M_i,B_i \in G_{4,0}\) e che contengono un numero pari di blades. Questo implica che:
    \begin{itemize}
       \item Ogni neurone in un layer rappresenta una trasformazione geometrica del suo input preservando il grado degli oggetti 
       \item Ogni ouput del GCAN layer è anch’esso un motore 
@@ -282,4 +295,13 @@
    Queste caratteristiche rendono la rete particolarmente interessante non solo per la sua accuratezza, ma anche per la leggerezza e la scalabilità.
     Inoltre, l’integrazione tra l’output geometrico del backbone e la manipolazione esplicita tramite i GCAN layers rappresenta un’innovazione che unisce deep learning e geometria computazionale. 
     Tale approccio conferma l’efficacia del modello e apre nuove prospettive per il miglioramento delle reti neurali in compiti di visione artificiale che richiedono una consapevolezza geometrica avanzata.
+\end{frame}
+\begin{frame}{Bibliografia}
+    \begin{itemize}
+        \item David Ruhe, Jayesh K. Gupta, Steven de Keninck, Max Welling, Johannes Brandstetter
+            \emph{Geometric Clifford Algebra Networks}
+            
+        \item Alberto Pepe, Joan Lasenby, \emph{CGAPoseNet+GCAN: A Geometric Clifford Algebra Network for
+        Geometry-aware Camera Pose Regression}
+    \end{itemize}
 \end{frame}
