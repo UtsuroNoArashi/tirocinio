@@ -1,17 +1,16 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI;
 
 public class UI : MonoBehaviour {
-    public ToggleGroup selectedPlanet;
-    private List<Planet> planets;
+    public ToggleGroup toggledPlanets;
+    public Button confirm;
 
-    public Planet initPlanet(){
-        IEquatable<Toggle> selected = selectedPlanet.ActiveToggles;
+    private List<Planet> planets = Button.planetes;
 
-        foreach (Toggle toggle in selected) {
-            planets.Add(new Planet(toggle.gameObject.tag))
+    void print(){
+        foreach (Planet planet in planets) {
+            Console.WriteLine($"Planet: {planet.tag}");
         }
     }
 }
