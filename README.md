@@ -1,3 +1,12 @@
-**ARCHITETTURA**
-
-[Link all'architettura modificabile](https://app.diagrams.net/#G10ioNA3i7YScJ8ETAOgx_yFk_1T61TpLh#%7B%22pageId%22%3A%22t11QtQghpPKsjs9m8q-p%22%7D)
+# GETTING STARTED
+Start by cloning the repository using:
+`git clone https://github.com/Qualcomm-AI-research/geometric-algebra-trasformer`.
+Open the cloned repository and from here build the Docker image.
+On Linux-like systems this can be done running the following commands.
+```bash
+cd geometric-algebra-transformer
+docker build -f docker/Dockerfile --tag gatr:latest .
+```
+Once built the image can be run via:
+`sudo docker run --rm -it -v $PWD:$PWD -w $PWD --memory=8g gatr:latest /bin/bash`
+which also exposes the host's GPUs to the container.
