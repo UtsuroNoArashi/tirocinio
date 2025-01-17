@@ -68,3 +68,26 @@ Actual final positions (x, y, z):
  [-18.90975347  -4.20430149  -1.40140385]]
 ``` 
 This script now prints both the input values (planet masses, initial positions, and velocities) as well as the predicted and actual final positions of the planets for comparison.
+
+## Input Data Requirements for Unity
+
+When using the model in Unity, ensure the input data respects the following ranges to avoid errors and ensure realistic behavior:
+
+### **Masses:**
+- **Star mass:** `[1.0, 10.0]` (continuous values). 
+- **Planet masses:** `[0.01, 0.1]` (continuous values).
+
+### **Initial Positions (x, y, z):**
+- **Star position:** Always fixed at `(0, 0, 0)`.
+- **Planet positions:** 
+  - Distributed around the star in the x-y plane within a radial distance:
+    - **Radial distance (r):** `[0.1, 1.0]`.
+
+### **Initial Velocities (vx, vy, vz):**
+- **Star velocity:** Always fixed at `(0, 0, 0)`.
+- **Planet velocities:** 
+  - Velocities should be set to allow approximately stable circular orbits around the star.
+  - Suggested range for each velocity component:
+    - **vx:** `[0.1, 2.0]`
+    - **vy:** `[0.1, 2.0]`
+    - **vz:** `[0.1, 2.0]`
