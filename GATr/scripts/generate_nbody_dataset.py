@@ -2,7 +2,7 @@
 # Copyright (c) 2023 Qualcomm Technologies, Inc.
 # All rights reserved.
 import sys
-sys.path.append("../")
+sys.path.append("")
 from pathlib import Path
 
 import hydra
@@ -35,14 +35,14 @@ def generate_datasets(path):
     print(f"Creating gravity dataset in {str(path)}")
 
     simulator = NBodySimulator()
-    generate_dataset(path / "train.npz", simulator, 100000, num_planets=3, domain_shift=False)
-    generate_dataset(path / "val.npz", simulator, 5000, num_planets=3, domain_shift=False)
-    generate_dataset(path / "eval.npz", simulator, 5000, num_planets=3, domain_shift=False)
+    generate_dataset(path / "train.npz", simulator, 1000, num_planets=3, domain_shift=False)
+    generate_dataset(path / "val.npz", simulator, 500, num_planets=3, domain_shift=False)
+    generate_dataset(path / "eval.npz", simulator, 500, num_planets=3, domain_shift=False)
     generate_dataset(
-        path / "e3_generalization.npz", simulator, 5000, num_planets=3, domain_shift=True
+        path / "e3_generalization.npz", simulator, 500, num_planets=3, domain_shift=True
     )
     generate_dataset(
-        path / "object_generalization.npz", simulator, 5000, num_planets=5, domain_shift=False
+        path / "object_generalization.npz", simulator, 500, num_planets=5, domain_shift=False
     )
 
     print("Done, have a nice day!")
