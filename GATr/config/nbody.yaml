@@ -1,17 +1,17 @@
 exp_name: nbody
-run_name: ???
+run_name: gatr
 
-base_dir : ???
+base_dir: "GATrExperiments" 
 exp_dir: '${base_dir}/experiments/${exp_name}/${run_name}'
 
-seed: ???
+seed: 42
 debug: false
 
 checkpoint: null
 
 data:
   data_dir: '${base_dir}/data/nbody'
-  subsample: null
+  subsample: 0.001 #0.01 original value
 
   mv_channels_in: 1
   mv_channels_out: 1
@@ -27,7 +27,7 @@ data:
 training:
   output_regularization: 0.01
 
-  steps: 50000
+  steps: 50 #5000 original value
   batchsize: 64
   eval_batchsize: 64
 
