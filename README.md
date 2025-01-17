@@ -74,20 +74,19 @@ This script now prints both the input values (planet masses, initial positions, 
 When using the model in Unity, ensure the input data respects the following ranges to avoid errors and ensure realistic behavior:
 
 ### **Masses:**
-- **Star mass:** `[1.0, 10.0]` (continuous values). 
-- **Planet masses:** `[0.01, 0.1]` (continuous values).
+- **Star mass:** `[1.0, 10.0]` (continuous values, in solar masses). 
+- **Planet masses:** `[0.01, 0.1]` (continuous values, in Earth masses).
 
 ### **Initial Positions (x, y, z):**
 - **Star position:** Always fixed at `(0, 0, 0)`.
 - **Planet positions:** 
   - Distributed around the star in the x-y plane within a radial distance:
-    - **Radial distance (r):** `[0.1, 1.0]`.
+    - **Radial distance (r):** `[0.1, 1.0]`. (continuous values, in UA)
 
 ### **Initial Velocities (vx, vy, vz):**
 - **Star velocity:** Always fixed at `(0, 0, 0)`.
 - **Planet velocities:** 
-  - Velocities should be set to allow approximately stable circular orbits around the star.
   - Suggested range for each velocity component:
-    - **vx:** `[0.1, 2.0]`
+    - **vx:** `[0.1, 2.0]` (1.0 is the Earth orbit speed i.e. 30K/s
     - **vy:** `[0.1, 2.0]`
     - **vz:** `[0.1, 2.0]`
