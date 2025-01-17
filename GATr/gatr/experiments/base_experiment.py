@@ -105,6 +105,8 @@ class BaseExperiment:
                 self.train()
                 # Save model
                 self.save_model("model_final.pt")
+                self.convert_to_float32()
+                self.save_model_onnx("model_final.onnx")
 
             # Evaluate
             if evaluate:
@@ -338,6 +340,54 @@ class BaseExperiment:
             assert ema_path != model_path
             torch.save(self.ema.state_dict(), ema_path)
 
+    def convert_to_float32(self):
+        for param in self.model.parameters():
+            param.data = param.data.float()
+        for buffer in self.model.buffers():
+            buffer.data = buffer.data.float()
+        
+        self.model = self.model.float()
+
+    def save_model_onnx(self, onnx_filename=None):
+        """Save model in experiment folder and as ONNX file.
+
+        Parameters
+        ----------
+        onnx_filename : None or str
+            Filename to save the model in ONNX format. If None, it won't save as ONNX.
+        """
+        assert self.model is not None
+
+        # Ripristina il modello originale se ottimizzato con torch.compile
+        if hasattr(self.model, "_orig_mod"):
+            self.model = self.model._orig_mod
+
+        # Salvataggio in formato ONNX, se il nome del file è fornito
+        if onnx_filename is not None:
+            onnx_model_path = Path(self.cfg.exp_dir) / "models" / onnx_filename
+            logger.info(f"Saving model in ONNX format at {onnx_model_path}")
+
+            # Impostare il modello in modalità di valutazione
+            self.model.eval()
+
+            # Dummy input per il modello: (batch_size=1, num_objects=4, features=7)
+            dummy_input = torch.randn(1, 4, 7, dtype=torch.float32)
+
+            # Converte il modello in formato ONNX
+            torch.onnx.export(
+                self.model,
+                dummy_input,
+                onnx_model_path,
+                export_params=True,       # Salva i parametri del modello
+                #opset_version=14,         # Specifica la versione di ONNX
+                do_constant_folding=True, # Ottimizza le costanti
+                input_names=["input"],    # Nome dell'input
+                output_names=["output"],  # Nome dell'output
+                dynamic_axes={"input": {0: "batch_size"}, "output": {0: "batch_size"}}  # Supporta batch dinamici
+            )
+            logger.info(f"Model saved as ONNX at {onnx_model_path}")
+
+    
     def register_hook(self, function, step=None, every_steps=None):
         """Registers a hook.
 

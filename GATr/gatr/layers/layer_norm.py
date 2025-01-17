@@ -62,9 +62,8 @@ class EquiLayerNorm(nn.Module):
         """
 
         outputs_mv = equi_layer_norm(
-            multivectors, channel_dim=self.mv_channel_dim, epsilon=self.epsilon
-        )
-        normalized_shape = scalars.shape[-1:]
-        outputs_s = torch.nn.functional.layer_norm(scalars, normalized_shape=normalized_shape)
-
+        multivectors, channel_dim=self.mv_channel_dim, epsilon=self.epsilon
+    )
+        # Normalized shape è ora statico e compatibile con ONNX
+        outputs_s = torch.nn.functional.layer_norm(scalars, normalized_shape=(128,))
         return outputs_mv, outputs_s

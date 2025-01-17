@@ -375,7 +375,11 @@ def geometric_attention(
 
     num_channels_qk = num_mv_channels_qk * (7 + 5) + num_s_channels_qk
     num_channels_v = num_mv_channels_v * 16 + num_s_channels_v
-    num_channels = max(num_channels_qk, num_channels_v)
+    
+    num_channels_qk = torch.tensor(num_channels_qk) if not isinstance(num_channels_qk, torch.Tensor) else num_channels_qk
+    num_channels_v = torch.tensor(num_channels_v) if not isinstance(num_channels_v, torch.Tensor) else num_channels_v
+
+    num_channels = torch.maximum(num_channels_qk, num_channels_v)
     num_channels = 8 * -(-num_channels // 8)  # Ceil to multiple of 8
 
     q = torch.cat(
@@ -405,7 +409,7 @@ def geometric_attention(
         ],
         -1,
     )
-    k = k * math.sqrt(num_channels / num_channels_qk)  # Correct for zero padding
+    k = k * torch.sqrt(num_channels / num_channels_qk)  # Correct for zero padding
     q, k, v_out = _sdpa_graph_breaking(q, k, v, attn_mask=attn_mask)
 
     v_out_mv = rearrange(v_out[..., : num_mv_channels_v * 16], "... (c x) -> ...  c x", x=16)
@@ -417,7 +421,7 @@ def geometric_attention(
     return v_out_mv, v_out_s
 
 
-@torch.compiler.disable
+#@torch.compiler.disable
 def _sdpa_graph_breaking(q, k, v, attn_mask):
     """A helper function to isolate the graph-breaking parts of the attention (cf. decorator).
 

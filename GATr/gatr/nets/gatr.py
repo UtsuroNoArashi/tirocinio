@@ -176,6 +176,18 @@ class GATr(nn.Module):
             Output scalars, if scalars are provided. Otherwise None.
         """
 
+        assert multivectors.dtype == torch.float32, f"multivectors dtype: {multivectors.dtype}"
+        if scalars is not None:
+            assert scalars.dtype == torch.float32, f"scalars dtype: {scalars.dtype}"
+        if attention_mask is not None:
+            assert attention_mask.dtype == torch.float32, f"attention_mask dtype: {attention_mask.dtype}"
+
+        multivectors = multivectors.float()
+        if scalars is not None:
+            scalars = scalars.float()
+        if attention_mask is not None:
+            attention_mask = attention_mask.float()
+
         # Reference multivector and channels that will be re-inserted in any query / key computation
         reference_mv = construct_reference_multivector(join_reference, multivectors)
         additional_qk_features_mv, additional_qk_features_s = self._construct_reinserted_channels(
@@ -225,3 +237,5 @@ class GATr(nn.Module):
             additional_qk_features_s = scalars[..., self._reinsert_s_channels]
 
         return additional_qk_features_mv, additional_qk_features_s
+
+    

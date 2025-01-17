@@ -76,6 +76,13 @@ def extract_point(
     coordinates : torch.Tensor with shape (..., 3)
         3D coordinates corresponding to the trivector components of the multivector.
     """
+
+    # Assicuriamoci che il multivector sia float32
+    multivector = multivector.to(dtype=torch.float32)
+    
+    # Convertiamo anche threshold in un tensore float32
+    threshold = torch.tensor(threshold, dtype=torch.float32, device=multivector.device)
+    
     if not divide_by_embedding_dim:
         warnings.warn(
             'Calling "extract_point" with divide_by_embedding_dim=False is deprecated, '
@@ -93,6 +100,7 @@ def extract_point(
         embedding_dim = multivector[
             ..., [14]
         ]  # Embedding dimension / scale of homogeneous coordinates
+        embedding_dim = embedding_dim.to(dtype=torch.float32)
         embedding_dim = torch.where(torch.abs(embedding_dim) > threshold, embedding_dim, threshold)
         coordinates = coordinates / embedding_dim
 
