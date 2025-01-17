@@ -27,13 +27,10 @@ python scripts/nbody_experiment.py model=gatr_nbody data.subsample=0.01 training
 
 #### Input tensor of dimension [1, 4, 7] (1 sample for 4 planets with 7 parameters)
 
-Initial positions (x, y, z) of planets:
-```bash 
-[[-19.30458052  -5.09142425  -1.71743116]
- [-18.95293991  -4.954115    -2.10290605]
- [-18.71318257  -4.56528173  -2.06411723]
- [-18.83038067  -4.12001627  -1.43396349]]
- ```
+Initial masses 
+```bash
+[0.02146309 0.01986073 1.115385   0.02487979]
+```
 
 Initial positions (x, y, z):
 ```bash
