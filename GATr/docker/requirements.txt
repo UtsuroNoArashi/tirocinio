@@ -35,6 +35,8 @@ torch_scatter
 torch_sparse
 torch_cluster
 torch_spline_conv
+onnxruntime
+onnx
 
 ## Experiment management
 hydra-core

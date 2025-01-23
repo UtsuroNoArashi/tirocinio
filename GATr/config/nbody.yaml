@@ -47,7 +47,7 @@ training:
   save_model_every_n_steps: 0
   update_lr_every_n_steps: 1000
 
-  eval_device: cpu
+  eval_device: cpu # cuda
   progressbar: true
   detect_anomaly: false
 

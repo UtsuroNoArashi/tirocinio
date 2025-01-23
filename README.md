@@ -11,6 +11,11 @@ Once built the image can be run via:
 `sudo docker run --rm -it -v $PWD:$PWD -w $PWD --memory=8g gatr:latest /bin/bash`
 which also exposes the host's GPUs to the container.
 
+On Windows you can run the docker image by running the following comand
+```bash
+docker run --rm -it -v "${PWD}:/workspace" -w /workspace gatr:lates
+
+```
 ## Running experiments
 
 First, we need to generate training and evaluation datasets:
