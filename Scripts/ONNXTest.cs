@@ -1,9 +1,14 @@
 using UnityEngine;
 using Unity.Sentis;
 
-public class ONNXTest : MonoBehaviour 
+public class ONNXTest : MonoBehaviour
 {
-    private Model runtimeModel;
+    Model runtimeModel;
+
+    Worker worker;
+
+    public float[] results;
+
 
     void Start()
     {
@@ -17,7 +22,9 @@ public class ONNXTest : MonoBehaviour
 
         // Esegui la predizione
         Tensor inputTensor = PrepareInputTensor();
-        Tensor outputTensor = runtimeModel.Execute(inputTensor);
+        worker = new Worker(runtimeModel, BackendType.GPUComplete);
+        inputTensor<float> outputTensor = worker.PeekOutput() as Tensor<float>;
+
         PrintResults(outputTensor);
 
         // Libera la memoria
@@ -60,7 +67,7 @@ public class ONNXTest : MonoBehaviour
         {
             Debug.Log($"Pianeta {i + 1}:");
             Debug.Log($"Predetto: ({predicted[i * 3]:F6}, {predicted[i * 3 + 1]:F6}, {predicted[i * 3 + 2]:F6})");
-            Debug.Log($"Reale: ({actual[i,0]:F6}, {actual[i,1]:F6}, {actual[i,2]:F6})");
+            Debug.Log($"Reale: ({actual[i, 0]:F6}, {actual[i, 1]:F6}, {actual[i, 2]:F6})");
         }
     }
 }
