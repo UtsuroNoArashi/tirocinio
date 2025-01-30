@@ -1,5 +1,4 @@
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using Unity.Sentis;
 using TMPro;
@@ -13,49 +12,80 @@ public class Gatr : MonoBehaviour
 
     void Start()
     {
-        // Carica il modello ONNX
-        runtimeModel = ModelLoader.Load(modelAsset);
-        if (runtimeModel == null)
-        {
-            Debug.LogError("Errore: modello non caricato.");
-            return;
+        // Asincronous execution
+        StartCoroutine(InitializeAndProcess());
+    }
+
+
+    IEnumerator initializeAndProcess()
+    {
+
+        // Carica Assets con Debug
+        if(modelAsset == null){
+            Debug.LogError("ModelAsset non assegnato!");
         }
 
-        // Prepara il worker
-        worker = new Worker(runtimeModel, BackendType.GPUCompute);
-
-        // Prepara l'input
-        Tensor inputTensor = PrepareInputTensor();
-
-        // Esegui la predizione
-        worker.Schedule(inputTensor);
-        Tensor<float> outputTensor = worker.PeekOutput() as Tensor<float>;
-        outputTensor.ReadbackAndClone();
-
-        if (outputTensor == null)
-        {
-            Debug.LogError("Errore: il tensor di output è nullo.");
-            Cleanup(inputTensor, null);
-            return;
+        if(outputText == null){
+            Debug.LogError("TMP_Text non assegnato!");
         }
 
-        // Stampa i risultati
-        string resultsString = outputTensor.ToString();
+        outputText.text = "Caricamento in corso ...\n";
 
-        Debug.Log(resultsString);
-
-        // Mostra i risultati nella UI
-        if (outputText != null)
+        // Try catch per gestire eccezioni
+        try
         {
-            outputText.text = resultsString;
-        }
-        else
-        {
-            Debug.LogWarning("Il componente Text non è stato assegnato.");
-        }
+            // Carica il modello
+            runtimeModel = ModelLoader.Load(modelAsset);
+            if(runtimeModel == null){
+                outputText.text = "Errore: modello non caricato.\n";
+                Debug.LogError("Errore: modello non caricato.");
+                yield break;
+            }
 
-        // Libera la memoria
-        Cleanup(inputTensor, outputTensor);
+            // Prepara il worker
+            worker = new Worker(runtimeModel, BackendType.CPU);
+
+            // Prepara l'input
+            Tensor inputTensor = PrepareInputTensor();
+
+            if(inputTensor == null){
+                outputText.text = "Errore: tensor di input non caricato.\n";
+                Debug.LogError("Errore: tensor di input non caricato.");
+                yield break;
+            }
+
+            // worker.Execute(inputTensor); // Sincrono
+            worker.Schedule(inputTensor); // Asincrono
+
+            // Attende un frame per assicurarsi che l'esecuzione sia completa
+            yield return null;
+
+            Tensor<float> outputTensor = worker.PeekOutput() as Tensor<float>;
+
+            if(outputTensor == null){
+                outputText.text = "Errore: tensor di output non caricato.\n";
+                Debug.LogError("Errore: tensor di output non caricato.");
+                yield break;
+            }
+
+            // Stampa i risultati
+            string resultsString = outputTensor.ToString();
+            if (outputText != null){
+                outputText.text = resultsString;
+                Debug.Log(resultsString);
+            }else{
+                Debug.LogWarning("Il componente Text non è stato assegnato.");
+            }
+        }
+        catch (System.Exception e){
+            outputText.text = "Errore: " + e.Message + "\n";
+            Debug.LogError("Errore: " + e.Message);
+            throw;
+        }
+        finally{
+            // Libera la memoria
+            Cleanup(inputTensor, outputTensor);
+        }
     }
 
     Tensor PrepareInputTensor()
@@ -71,7 +101,7 @@ public class Gatr : MonoBehaviour
             
             // Pianeta 3
             1.115385f, -18.71318257f, -4.56528173f, -2.06411723f, 0f, 0f, 0f,
-            
+
             // Pianeta 4
             0.02487979f, -18.83038067f, -4.12001627f, -1.43396349f, -0.81023741f, -0.79165406f, 0.40258876f
         };
