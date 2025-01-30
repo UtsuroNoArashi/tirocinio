@@ -92,6 +92,6 @@ When using the model in Unity, ensure the input data respects the following rang
 - **Star velocity:** Always fixed at `(0, 0, 0)`.
 - **Planet velocities:** 
   - Suggested range for each velocity component:
-    - **vx:** `[0.1, 2.0]` (1.0 is the Earth orbit speed i.e. 30K/s
+    - **vx:** `[0.1, 2.0]` (1.0 is the Earth orbit speed i.e. 30K/s)
     - **vy:** `[0.1, 2.0]`
     - **vz:** `[0.1, 2.0]`
