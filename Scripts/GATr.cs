@@ -1,4 +1,5 @@
 using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 using Unity.Sentis;
 using TMPro;
@@ -10,84 +11,112 @@ public class Gatr : MonoBehaviour
     private Model runtimeModel;
     private Worker worker;
 
-    void Start()
+    Tensor inputTensor;
+
+    const int k_LayersPerFrame = 5;
+
+    IEnumerator scheduler;
+    bool m_Started = false;
+
+    void OnEnable()
     {
-        // Asincronous execution
-        StartCoroutine(InitializeAndProcess());
-    }
-
-
-    IEnumerator initializeAndProcess()
-    {
-
         // Carica Assets con Debug
-        if(modelAsset == null){
+        if (modelAsset == null)
+        {
             Debug.LogError("ModelAsset non assegnato!");
         }
 
-        if(outputText == null){
+        if (outputText == null)
+        {
             Debug.LogError("TMP_Text non assegnato!");
         }
 
-        outputText.text = "Caricamento in corso ...\n";
+        outputText.text += "Caricamento in corso ...\n";
 
         // Try catch per gestire eccezioni
-        try
+        runtimeModel = ModelLoader.Load(modelAsset);
+        if (runtimeModel == null)
         {
-            // Carica il modello
-            runtimeModel = ModelLoader.Load(modelAsset);
-            if(runtimeModel == null){
-                outputText.text = "Errore: modello non caricato.\n";
-                Debug.LogError("Errore: modello non caricato.");
-                yield break;
-            }
-
-            // Prepara il worker
-            worker = new Worker(runtimeModel, BackendType.CPU);
-
-            // Prepara l'input
-            Tensor inputTensor = PrepareInputTensor();
-
-            if(inputTensor == null){
-                outputText.text = "Errore: tensor di input non caricato.\n";
-                Debug.LogError("Errore: tensor di input non caricato.");
-                yield break;
-            }
-
-            // worker.Execute(inputTensor); // Sincrono
-            worker.Schedule(inputTensor); // Asincrono
-
-            // Attende un frame per assicurarsi che l'esecuzione sia completa
-            yield return null;
-
-            Tensor<float> outputTensor = worker.PeekOutput() as Tensor<float>;
-
-            if(outputTensor == null){
-                outputText.text = "Errore: tensor di output non caricato.\n";
-                Debug.LogError("Errore: tensor di output non caricato.");
-                yield break;
-            }
-
-            // Stampa i risultati
-            string resultsString = outputTensor.ToString();
-            if (outputText != null){
-                outputText.text = resultsString;
-                Debug.Log(resultsString);
-            }else{
-                Debug.LogWarning("Il componente Text non è stato assegnato.");
-            }
+            outputText.text = "Errore: modello non caricato.\n";
+            Debug.LogError("Errore: modello non caricato.");
         }
-        catch (System.Exception e){
-            outputText.text = "Errore: " + e.Message + "\n";
-            Debug.LogError("Errore: " + e.Message);
-            throw;
+
+        List<Model.Input> inputs = runtimeModel.inputs;
+
+        // Loop through each input
+        foreach (var input in inputs)
+        {
+            // Log the name of the input, for example Input3
+            outputText.text += $"input.name = {input.name}\n";
+
+            // Log the tensor shape of the input, for example (1, 1, 28, 28)
+            outputText.text += $"input.shape = {input.shape}\n";
         }
-        finally{
-            // Libera la memoria
-            Cleanup(inputTensor, outputTensor);
+
+
+        // Prepara il worker
+        worker = new Worker(runtimeModel, BackendType.GPUCompute);
+
+        // Prepara l'input
+        inputTensor = PrepareInputTensor();
+        outputText.text += $"Input Tensor Shape: {inputTensor.shape}\n";
+
+        if (inputTensor == null)
+        {
+            outputText.text += "Errore: tensor di input non caricato.\n";
+            Debug.LogError("Errore: tensor di input non caricato.");
         }
     }
 
+    void Update()
+    {
+        if (!m_Started)
+        {
+            // ScheduleIterable starts the scheduling of the model
+            // it returns a IEnumerator to iterate over the model layers, scheduling each layer sequentially
+            outputText.text += "scheduler inizializzato\n";
+            scheduler = worker.ScheduleIterable(inputTensor);
+            m_Started = true;
+        }
+
+        int it = 0;
+        while (scheduler.MoveNext())
+        {
+            if (++it % k_LayersPerFrame == 0)
+            {
+                outputText.text += $"fine ciclo, ";
+                return;
+            }
+        }
+
+        var outputTensor = worker.PeekOutput() as Tensor<float>;
+
+        if (outputTensor == null)
+        {
+            outputText.text += "Errore: tensor di output non caricato.\n";
+            Debug.LogError("Errore: tensor di output non caricato.");
+        }
+
+        var cpuTensor = outputTensor.ReadbackAndClone();
+
+        outputText.text += $"Output Tensor Shape: {cpuTensor.shape}\n";
+        m_Started = false;
+        // Stampa i risultati
+        string resultsString = cpuTensor.ToString();
+        if (outputText != null)
+        {
+            outputText.text += $"risultato tensore di output: {resultsString}";
+            Debug.Log(resultsString);
+        }
+        else
+        {
+            outputText.text += "Output Text is null";
+            Debug.LogWarning("Il componente Text non è stato assegnato.");
+        }
+
+        cpuTensor.Dispose();
+
+    }
     Tensor PrepareInputTensor()
     {
         // Dati di input per ogni pianeta: [massa, pos_x, pos_y, pos_z, vel_x, vel_y, vel_z]
@@ -131,12 +160,10 @@ public class Gatr : MonoBehaviour
         return resultsString;
     }
 
-    void Cleanup(Tensor inputTensor, Tensor outputTensor)
+    void OnDisable()
     {
         if (inputTensor != null)
             inputTensor.Dispose();
-        if (outputTensor != null)
-            outputTensor.Dispose();
         if (worker != null)
             worker.Dispose();
     }

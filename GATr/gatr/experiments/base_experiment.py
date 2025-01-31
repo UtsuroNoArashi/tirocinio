@@ -383,7 +383,7 @@ class BaseExperiment:
                 do_constant_folding=True, # Ottimizza le costanti
                 input_names=["input"],    # Nome dell'input
                 output_names=["output"],  # Nome dell'output
-                dynamic_axes={"input": {0: "batch_size"}, "output": {0: "batch_size"}}  # Supporta batch dinamici
+                # dynamic_axes={"input": {0: "batch_size"}, "output": {0: "batch_size"}}  # Supporta batch dinamici
             )
             logger.info(f"Model saved as ONNX at {onnx_model_path}")
 

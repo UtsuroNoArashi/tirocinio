@@ -13,7 +13,7 @@ which also exposes the host's GPUs to the container.
 
 On Windows you can run the docker image by running the following comand
 ```bash
-docker run --rm -it -v "${PWD}:/workspace" -w /workspace gatr:lates
+docker run --rm -it -v "${PWD}:/workspace" -w /workspace gatr:latest
 
 ```
 ## Running experiments

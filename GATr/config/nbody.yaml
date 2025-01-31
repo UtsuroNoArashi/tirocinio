@@ -11,7 +11,7 @@ checkpoint: null
 
 data:
   data_dir: '${base_dir}/data/nbody'
-  subsample: 0.001 #0.01 original value
+  subsample: 0.01 #0.01 original value
 
   mv_channels_in: 1
   mv_channels_out: 1
@@ -27,7 +27,7 @@ data:
 training:
   output_regularization: 0.01
 
-  steps: 50 #5000 original value
+  steps: 500 #5000 original value
   batchsize: 64
   eval_batchsize: 64
 
