@@ -3,141 +3,140 @@ using System.Collections.Generic;
 using UnityEngine;
 using Unity.Sentis;
 using TMPro;
+using System.Text;
 
 public class Gatr : MonoBehaviour
 {
     [SerializeField] private ModelAsset modelAsset;
     [SerializeField] private TMP_Text outputText;
+
     private Model runtimeModel;
     private Worker worker;
-
     Tensor inputTensor;
 
-    const int k_LayersPerFrame = 5;
+    private const int k_LayersPerFrame = 10;
+    private bool m_Started = false;
+    private IEnumerator scheduler;
 
-    IEnumerator scheduler;
-    bool m_Started = false;
-
-    void OnEnable()
+    void Awake()
     {
-        // Carica Assets con Debug
+        QualitySettings.vSyncCount = 0;
+        Application.targetFrameRate = 60;
+
+        // Uses StringBuilder to build debug messages
+        StringBuilder sb = new StringBuilder();
+
+        // Loads assets with debug
         if (modelAsset == null)
         {
-            Debug.LogError("ModelAsset non assegnato!");
+            sb.AppendLine("ModelAsset not assigned!");
+            Debug.LogError("ModelAsset not assigned!");
         }
 
         if (outputText == null)
         {
-            Debug.LogError("TMP_Text non assegnato!");
+            sb.AppendLine("TMP_Text not assigned!");
+            Debug.LogError("TMP_Text not assigned!");
+        }
+        else
+        {
+            sb.AppendLine("Loading ...");
         }
 
-        outputText.text += "Caricamento in corso ...\n";
-
-        // Try catch per gestire eccezioni
+        // Loads the model
         runtimeModel = ModelLoader.Load(modelAsset);
+
+        ModelQuantizer.QuantizeWeights(QuantizationType.Float16, ref runtimeModel);
+
         if (runtimeModel == null)
         {
-            outputText.text = "Errore: modello non caricato.\n";
-            Debug.LogError("Errore: modello non caricato.");
+            sb.AppendLine("Error: model not loaded.");
+            Debug.LogError("Error: model not loaded.");
+        }
+        else
+        {
+            sb.AppendLine("Model loaded");
         }
 
         List<Model.Input> inputs = runtimeModel.inputs;
 
-        // Loop through each input
+        // Logs the inputs of the model
         foreach (var input in inputs)
         {
-            // Log the name of the input, for example Input3
-            outputText.text += $"input.name = {input.name}\n";
-
-            // Log the tensor shape of the input, for example (1, 1, 28, 28)
-            outputText.text += $"input.shape = {input.shape}\n";
+            sb.AppendLine($"input.name = {input.name}");
+            sb.AppendLine($"input.shape = {input.shape}");
         }
 
-
-        // Prepara il worker
+        // Prepares the worker
         worker = new Worker(runtimeModel, BackendType.GPUCompute);
 
-        // Prepara l'input
+        // Prepares the input
         inputTensor = PrepareInputTensor();
-        outputText.text += $"Input Tensor Shape: {inputTensor.shape}\n";
-
+        sb.AppendLine($"Input Tensor Shape: {inputTensor.shape}");
         if (inputTensor == null)
         {
-            outputText.text += "Errore: tensor di input non caricato.\n";
-            Debug.LogError("Errore: tensor di input non caricato.");
+            sb.AppendLine("Error: input tensor not loaded.");
+            Debug.LogError("Error: input tensor not loaded.");
         }
+
+        // Assigns the text constructed with StringBuilder
+        outputText.text = sb.ToString();
     }
 
-    void Update()
+    /// <summary>
+    /// Coroutine that runs the model in small steps to avoid blocking the frame rate
+    /// </summary>
+    public void StartPrediction()
     {
-        if (!m_Started)
+        if (m_Started)
         {
-            // ScheduleIterable starts the scheduling of the model
-            // it returns a IEnumerator to iterate over the model layers, scheduling each layer sequentially
-            outputText.text += "scheduler inizializzato\n";
-            scheduler = worker.ScheduleIterable(inputTensor);
-            m_Started = true;
+            outputText.text += "Prediction already in progress...\n";
+            return;
         }
+        StartCoroutine(RunModelCoroutine());
+    }
 
+    /// <summary>
+    /// Coroutine that runs the model in small steps to avoid blocking the frame rate
+    /// </summary>
+    IEnumerator RunModelCoroutine()
+    {
+        m_Started = true;
+        outputText.text += "scheduler initialized\n";
+        scheduler = worker.ScheduleIterable(inputTensor);
+
+        // Starts the scheduler to run the model
         int it = 0;
         while (scheduler.MoveNext())
         {
-            if (++it % k_LayersPerFrame == 0)
-            {
-                outputText.text += $"fine ciclo, ";
-                return;
-            }
+            it++;
+            if (it % k_LayersPerFrame == 0)
+                // Waits for the next frame
+                yield return null;
         }
 
+        // The computation should be finished here
         var outputTensor = worker.PeekOutput() as Tensor<float>;
-
         if (outputTensor == null)
         {
-            outputText.text += "Errore: tensor di output non caricato.\n";
-            Debug.LogError("Errore: tensor di output non caricato.");
+            outputText.text += "Error: output tensor not loaded.\n";
+            Debug.LogError("Error: output tensor not loaded.");
+            m_Started = false;
+            yield break;
         }
 
+        // Reads the output from the GPU and creates a copy on the CPU
         var cpuTensor = outputTensor.ReadbackAndClone();
+        StringBuilder sb = new StringBuilder();
+        sb.AppendLine($"Output Tensor Shape: {cpuTensor.shape}");
 
-        outputText.text += $"Output Tensor Shape: {cpuTensor.shape}\n";
-        m_Started = false;
-        // Stampa i risultati
-        string resultsString = cpuTensor.ToString();
-        if (outputText != null)
-        {
-            outputText.text += $"risultato tensore di output: {resultsString}";
-            Debug.Log(resultsString);
-        }
-        else
-        {
-            outputText.text += "Output Text is null";
-            Debug.LogWarning("Il componente Text non è stato assegnato.");
-        }
+        // Prints the values inside the tensor
+        sb.Append(PrintResults(cpuTensor));
+        outputText.text += sb.ToString();
 
+        // Cleans up the resources used for this computation
         cpuTensor.Dispose();
-
-    }
-    Tensor PrepareInputTensor()
-    {
-        // Dati di input per ogni pianeta: [massa, pos_x, pos_y, pos_z, vel_x, vel_y, vel_z]
-        float[] inputData = new float[]
-        {
-            // Pianeta 1 (massa, posizione xyz, velocità xyz)
-            0.02146309f, -19.30458052f, -5.09142425f, -1.71743116f, -0.11754325f, 0.70240116f, 0.88894977f,
-            
-            // Pianeta 2
-            0.01986073f, -18.95293991f, -4.954115f, -2.10290605f, -0.70086511f, 0.29593982f, 1.36838713f,
-            
-            // Pianeta 3
-            1.115385f, -18.71318257f, -4.56528173f, -2.06411723f, 0f, 0f, 0f,
-
-            // Pianeta 4
-            0.02487979f, -18.83038067f, -4.12001627f, -1.43396349f, -0.81023741f, -0.79165406f, 0.40258876f
-        };
-
-        Tensor<float> inputTensor = new Tensor<float>(new TensorShape(1, 4, 7), inputData);
-
-        return inputTensor;
+        m_Started = false;
     }
 
     string PrintResults(Tensor<float> outputTensor)
@@ -149,15 +148,38 @@ public class Gatr : MonoBehaviour
             { -18.90975347f, -4.20430149f, -1.40140385f }
         };
 
-        string resultsString = "";
+        StringBuilder sb = new StringBuilder();
         for (int i = 0; i < 4; i++)
         {
-            resultsString += $"Pianeta {i + 1}:\n";
-            resultsString += $"Reale: ({actual[i, 0]:F6}, {actual[i, 1]:F6}, {actual[i, 2]:F6})\n";
-            resultsString += $"Previsto: ({outputTensor[i, 0]:F6}, {outputTensor[i, 1]:F6}, {outputTensor[i, 2]:F6})\n";
+            sb.AppendLine($"Planet {i + 1}:");
+            sb.AppendLine($"Real: ({actual[i, 0]:F6}, {actual[i, 1]:F6}, {actual[i, 2]:F6})");
+            sb.AppendLine($"Predicted: ({outputTensor[i, 0]:F6}, {outputTensor[i, 1]:F6}, {outputTensor[i, 2]:F6})");
         }
 
-        return resultsString;
+        return sb.ToString();
+    }
+
+    Tensor PrepareInputTensor()
+    {
+        // Input data for each planet: [mass, pos_x, pos_y, pos_z, vel_x, vel_y, vel_z]
+        float[] inputData = new float[]
+        {
+            // Planet 1 (mass, position xyz, velocity xyz)
+            0.02146309f, -19.30458052f, -5.09142425f, -1.71743116f, -0.11754325f, 0.70240116f, 0.88894977f,
+            
+            // Planet 2
+            0.01986073f, -18.95293991f, -4.954115f, -2.10290605f, -0.70086511f, 0.29593982f, 1.36838713f,
+            
+            // Planet 3
+            1.115385f, -18.71318257f, -4.56528173f, -2.06411723f, 0f, 0f, 0f,
+
+            // Planet 4
+            0.02487979f, -18.83038067f, -4.12001627f, -1.43396349f, -0.81023741f, -0.79165406f, 0.40258876f
+        };
+
+        Tensor<float> inputTensor = new Tensor<float>(new TensorShape(1, 4, 7), inputData);
+
+        return inputTensor;
     }
 
     void OnDisable()
