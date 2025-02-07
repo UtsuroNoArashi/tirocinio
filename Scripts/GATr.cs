@@ -12,9 +12,9 @@ public class Gatr : MonoBehaviour
 
     private Model runtimeModel;
     private Worker worker;
-    Tensor inputTensor;
+    Tensor<float> inputTensor;
 
-    private const int k_LayersPerFrame = 10;
+    private const int k_LayersPerFrame = 5;
     private bool m_Started = false;
     private IEnumerator scheduler;
 
@@ -46,7 +46,7 @@ public class Gatr : MonoBehaviour
         // Loads the model
         runtimeModel = ModelLoader.Load(modelAsset);
 
-        ModelQuantizer.QuantizeWeights(QuantizationType.Float16, ref runtimeModel);
+        // ModelQuantizer.QuantizeWeights(QuantizationType.Float16, ref runtimeModel);
 
         if (runtimeModel == null)
         {
@@ -105,16 +105,30 @@ public class Gatr : MonoBehaviour
         outputText.text += "scheduler initialized\n";
         scheduler = worker.ScheduleIterable(inputTensor);
 
+        yield return new WaitForEndOfFrame();
+
         // Starts the scheduler to run the model
         int it = 0;
         while (scheduler.MoveNext())
         {
             it++;
             if (it % k_LayersPerFrame == 0)
+            {
+                outputText.text += "- ";
                 // Waits for the next frame
-                yield return null;
+                yield return new WaitForEndOfFrame();
+            }
+
+            if (!this.isActiveAndEnabled)
+            {
+                outputText.text += "This not enabled ";
+                yield break;
+            }
         }
 
+        yield return new WaitForEndOfFrame();
+
+        outputText.text += "finished\n";
         // The computation should be finished here
         var outputTensor = worker.PeekOutput() as Tensor<float>;
         if (outputTensor == null)
@@ -159,7 +173,7 @@ public class Gatr : MonoBehaviour
         return sb.ToString();
     }
 
-    Tensor PrepareInputTensor()
+    Tensor<float> PrepareInputTensor()
     {
         // Input data for each planet: [mass, pos_x, pos_y, pos_z, vel_x, vel_y, vel_z]
         float[] inputData = new float[]
@@ -184,9 +198,18 @@ public class Gatr : MonoBehaviour
 
     void OnDisable()
     {
+        // Ferma tutte le coroutine per evitare che task in background vengano eseguiti dopo la distruzione
+        StopAllCoroutines();
+
         if (inputTensor != null)
+        {
             inputTensor.Dispose();
+            inputTensor = null;
+        }
         if (worker != null)
+        {
             worker.Dispose();
+            worker = null;
+        }
     }
 }
