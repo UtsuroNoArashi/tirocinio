@@ -1,0 +1,65 @@
+IndexOutOfRangeException: Index was outside the bounds of the array.
+11:07:35.675
+Unity
+at Unity.Sentis.CPUBackend.SetPositionFromIndex (System.Span`1[T] position, Unity.Sentis.TensorIndex indices, Unity.Sentis.TensorShape shape, System.Int32 index) [0x00000] in <00000000000000000000000000000000>:0
+11:07:35.675
+Unity
+at Unity.Sentis.CPUBackend.EinsumND (Unity.Sentis.Tensor`1[System.Single][] inputTensors, Unity.Sentis.Tensor`1[T] O, Unity.Sentis.TensorShape[] operandShapes, Unity.Sentis.TensorIndex[] operandIndices, Unity.Sentis.TensorIndex outputIndices, Unity.Sentis.TensorShape outputShape, Unity.Sentis.TensorIndex sumIndices, Unity.Sentis.TensorShape sumShape, System.Int32 numIndices) [0x00000] in <00000000000000000000000000000000>:0
+11:07:35.675
+Unity
+at Unity.Sentis.Layers.Einsum.Execute (Unity.Sentis.ExecutionContext ctx) [0x00000] in <00000000000000000000000000000000>:0
+11:07:35.675
+Unity
+at Unity.Sentis.Worker+<ScheduleIterable>d__25.MoveNext () [0x00000] in <00000000000000000000000000000000>:0
+11:07:35.675
+Unity
+at Gatr+<RunModelCoroutine>d__10.MoveNext () [0x00000] in <00000000
+
+
+
+
+11:43:26.130
+BackgroundThreadExecutor
+Refusing to execute task because BackgroundThreadExecutor instance is destroyed: com.oculus.common.util.ImmersiveAppDetails$onTopActivityChanged$1@e102b87
+11:43:26.130
+BackgroundThreadExecutor
+Refusing to execute task because BackgroundThreadExecutor instance is destroyed: com.oculus.common.util.ImmersiveAppDetails$onTopActivityChanged$1@b8fdab4
+11:43:26.130
+BackgroundThreadExecutor
+Refusing to execute task because BackgroundThreadExecutor instance is destroyed: com.oculus.common.util.ImmersiveAppDetails$onTopActivityChanged$1@c1b26dd
+11:43:26.135
+CamX
+[ERROR][CSL ] camxcslhwinternal.cpp:3184 CSLHwInternalDefaultIoctl() Ioctl failed for device /dev/v4l-subdev1 (Type:CSLHwIFE, FD:32, Index:0) with error reason Connection timed out
+11:43:26.135
+CamX
+[ERROR][CSL ] camxcslhwinternalife.cpp:209 CSLHwIFEKMDStreamModeCmd() ioctl failed for fd=32 index 0
+11:43:26.135
+ISPHVX
+IspMonoCamera.cpp:StreamingThread: Failed to get image buffer, cam[5] bufs 0:8
+11:43:26.140
+BackgroundThreadExecutor
+Refusing to execute task because BackgroundThreadExecutor instance is destroyed: com.oculus.common.util.ImmersiveAppDetails$onTopActivityChanged$1@9551252
+11:43:26.140
+BackgroundThreadExecutor
+Refusing to execute task because BackgroundThreadExecutor instance is destroyed: com.oculus.common.util.ImmersiveAppDetails$onTopActivityChanged$1@239f923
+11:43:26.140
+BackgroundThreadExecutor
+Refusing to execute task because BackgroundThreadExecutor instance is destroyed: com.oculus.common.util.ImmersiveAppDetails$onTopActivityChanged$1@a9ee20
+11:43:26.140
+BackgroundThreadExecutor
+Refusing to execute task because BackgroundThreadExecutor instance is destroyed: com.oculus.common.util.ImmersiveAppDetails$onTopActivityChanged$1@ba853d9
+11:43:26.140
+BackgroundThreadExecutor
+Refusing to execute task because BackgroundThreadExecutor instance is destroyed: com.oculus.common.util.ImmersiveAppDetails$onTopActivityChanged$1@30e019e
+11:43:26.140
+BackgroundThreadExecutor
+Refusing to execute task because BackgroundThreadExecutor instance is destroyed: com.oculus.common.util.ImmersiveAppDetails$onTopActivityChanged$1@fa9047f
+11:43:26.140
+BackgroundThreadExecutor
+Refusing to execute task because BackgroundThreadExecutor instance is destroyed: com.oculus.common.util.ImmersiveAppDetails$onTopActivityChanged$1@38fcc4c
+11:43:26.140
+BackgroundThreadExecutor
+Refusing to execute task because BackgroundThreadExecutor instance is destroyed: com.oculus.common.util.ImmersiveAppDetails$onTopActivityChanged$1@3415495
+11:43:26.140
+BackgroundThreadExecutor
+Refusing to execute task because BackgroundThreadExecutor instance is destroyed: com.oculus.common.util.ImmersiveAppDetails$onTopActivityChanged$1@ad499aa
